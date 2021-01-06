@@ -1,0 +1,10 @@
+C:\discmud\editor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\discmud\editor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\discmud\editor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\discmud\editor\WindowsFormsApp1\obj\Debug\mudeditor.csprojAssemblyReference.cache
+C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.FrmArea.resources
+C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\discmud\editor\WindowsFormsApp1\obj\Debug\mudeditor.csproj.GenerateResource.cache
+C:\discmud\editor\WindowsFormsApp1\obj\Debug\mudeditor.csproj.CoreCompileInputs.cache
+C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
