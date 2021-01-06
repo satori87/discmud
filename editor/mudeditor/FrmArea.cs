@@ -40,7 +40,6 @@ namespace WindowsFormsApp1 {
      
         private void Form1_Load(object sender, EventArgs e) {
             over.Owner = this;
-
         }
         bool shifting;
 
@@ -61,10 +60,13 @@ namespace WindowsFormsApp1 {
             }
         }
 
+        private void button1_Click_1(object sender, EventArgs e) {
+            addRoom(800, 800);
+        }
+
         void addRoom(int x, int y) {
             Panel panel = new Panel();
             panel.Location = new System.Drawing.Point(x - 50, y - 50);
-            
             panel.Size = new System.Drawing.Size(100, 100);
             this.graph.Controls.Add(panel);
             Room r = new Room(nextID);
@@ -193,6 +195,13 @@ namespace WindowsFormsApp1 {
                 if (rooms.TryGetValue(dest.exit[reverseDir(e)], out other)) {
                     for (int i = 0; i < 4; i++) {
                         if(other.exit[i] == did) {
+                            other.exit[i] = 0;
+                        }
+                    }
+                }
+                if (rooms.TryGetValue(src.exit[e], out other)) {
+                    for (int i = 0; i < 4; i++) {
+                        if (other.exit[i] == sid) {
                             other.exit[i] = 0;
                         }
                     }
@@ -327,10 +336,6 @@ namespace WindowsFormsApp1 {
 
            // }
 
-        }
-
-        private void button1_Click_1(object sender, EventArgs e) {
-            addRoom(600, 600);
         }
 
         private void graph_Paint(object sender, PaintEventArgs e) {
