@@ -32,8 +32,8 @@ namespace WindowsFormsApp1 {
         public FrmArea() {
             InitializeComponent();
             this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(panelMouseDown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(formKeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(formKeyUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(keyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(keyUp);
             this.over.Paint += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.over_paint);
         }
 
@@ -43,7 +43,10 @@ namespace WindowsFormsApp1 {
 
         }
         bool shifting;
-        private void formKeyDown(object sender, KeyEventArgs e) {
+
+
+
+        private void keyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey || e.KeyCode == Keys.Shift || e.KeyCode == Keys.ShiftKey) {
                 shifting = true;
             } else {
@@ -51,7 +54,7 @@ namespace WindowsFormsApp1 {
             }
         }
 
-        private void formKeyUp(object sender, KeyEventArgs e) {
+        private void keyUp(object sender, KeyEventArgs e) {
 
             if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey || e.KeyCode == Keys.Shift || e.KeyCode == Keys.ShiftKey) {
                 shifting = false;
@@ -295,7 +298,7 @@ namespace WindowsFormsApp1 {
             Graphics g = e.Graphics;
 
             //Let's make some pens
-            Pen pen = new Pen(Color.Blue, 5);
+            Pen pen = new Pen(Color.FromArgb(64,10,10,230), 5);
             System.Drawing.SolidBrush brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
             Pen pen2 = new Pen(brush);
             //Pen blackPen = new Pen(Color.Black, 1 / g.DpiX);
@@ -325,21 +328,14 @@ namespace WindowsFormsApp1 {
            // }
 
         }
-        private void button1_Click(object sender, EventArgs e) {
-            
-        }
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-
-        private void label2_Click(object sender, EventArgs e) {
+        private void button1_Click_1(object sender, EventArgs e) {
             addRoom(600, 600);
         }
 
         private void graph_Paint(object sender, PaintEventArgs e) {
 
         }
+
     }
 }

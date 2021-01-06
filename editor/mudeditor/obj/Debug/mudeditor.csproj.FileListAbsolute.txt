@@ -8,3 +8,13 @@ C:\discmud\editor\WindowsFormsApp1\obj\Debug\mudeditor.csproj.GenerateResource.c
 C:\discmud\editor\WindowsFormsApp1\obj\Debug\mudeditor.csproj.CoreCompileInputs.cache
 C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\discmud\editor\mudeditor\bin\Debug\WindowsFormsApp1.exe.config
+C:\discmud\editor\mudeditor\bin\Debug\WindowsFormsApp1.exe
+C:\discmud\editor\mudeditor\bin\Debug\WindowsFormsApp1.pdb
+C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csprojAssemblyReference.cache
+C:\discmud\editor\mudeditor\obj\Debug\WindowsFormsApp1.FrmArea.resources
+C:\discmud\editor\mudeditor\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csproj.GenerateResource.cache
+C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csproj.CoreCompileInputs.cache
+C:\discmud\editor\mudeditor\obj\Debug\WindowsFormsApp1.exe
+C:\discmud\editor\mudeditor\obj\Debug\WindowsFormsApp1.pdb
