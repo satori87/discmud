@@ -49,8 +49,8 @@
             this.txtAreaName = new System.Windows.Forms.TextBox();
             this.txtAreaDisplayName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.over = new CodeProject.GraphicalOverlay(this.components);
             this.btnLinkAll = new System.Windows.Forms.Button();
+            this.over = new CodeProject.GraphicalOverlay(this.components);
             this.roomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,7 +58,7 @@
             // 
             this.btnAddRoom.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAddRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddRoom.Location = new System.Drawing.Point(974, 882);
+            this.btnAddRoom.Location = new System.Drawing.Point(974, 881);
             this.btnAddRoom.Name = "btnAddRoom";
             this.btnAddRoom.Size = new System.Drawing.Size(156, 68);
             this.btnAddRoom.TabIndex = 1;
@@ -87,10 +87,9 @@
             this.roomPanel.Controls.Add(this.txtDisplayName);
             this.roomPanel.Location = new System.Drawing.Point(974, 138);
             this.roomPanel.Name = "roomPanel";
-            this.roomPanel.Size = new System.Drawing.Size(686, 738);
+            this.roomPanel.Size = new System.Drawing.Size(686, 725);
             this.roomPanel.TabIndex = 5;
             this.roomPanel.Visible = false;
-            this.roomPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.roomPanel_Paint);
             // 
             // btnLinkNearby
             // 
@@ -115,7 +114,6 @@
             this.btnDelete.TabIndex = 18;
             this.btnDelete.Text = "Delete Room";
             this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnClearExit
             // 
@@ -173,7 +171,6 @@
             this.btnSouth.TabIndex = 10;
             this.btnSouth.Text = "Add Room South";
             this.btnSouth.UseVisualStyleBackColor = true;
-            this.btnSouth.Click += new System.EventHandler(this.btnSouth_Click);
             // 
             // btnEast
             // 
@@ -268,7 +265,7 @@
             this.graph.Name = "graph";
             this.graph.Size = new System.Drawing.Size(950, 950);
             this.graph.TabIndex = 7;
-            this.graph.Paint += new System.Windows.Forms.PaintEventHandler(this.graph_Paint_1);
+            this.graph.Paint += new System.Windows.Forms.PaintEventHandler(this.graph_Paint);
             // 
             // lbl
             // 
@@ -279,7 +276,6 @@
             this.lbl.Size = new System.Drawing.Size(162, 25);
             this.lbl.TabIndex = 9;
             this.lbl.Text = "Current Elevation";
-            this.lbl.Click += new System.EventHandler(this.lbl_Click);
             // 
             // lblHeight
             // 
@@ -290,7 +286,6 @@
             this.lblHeight.Size = new System.Drawing.Size(31, 32);
             this.lblHeight.TabIndex = 10;
             this.lblHeight.Text = "0";
-            this.lblHeight.Click += new System.EventHandler(this.lblHeight_Click);
             // 
             // label4
             // 
@@ -301,7 +296,6 @@
             this.label4.Size = new System.Drawing.Size(180, 25);
             this.label4.TabIndex = 11;
             this.label4.Text = "Area Display Name";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtAreaName
             // 
@@ -309,7 +303,6 @@
             this.txtAreaName.Name = "txtAreaName";
             this.txtAreaName.Size = new System.Drawing.Size(505, 26);
             this.txtAreaName.TabIndex = 0;
-            this.txtAreaName.TextChanged += new System.EventHandler(this.txtAreaName_TextChanged);
             // 
             // txtAreaDisplayName
             // 
@@ -317,7 +310,6 @@
             this.txtAreaDisplayName.Name = "txtAreaDisplayName";
             this.txtAreaDisplayName.Size = new System.Drawing.Size(505, 26);
             this.txtAreaDisplayName.TabIndex = 1;
-            this.txtAreaDisplayName.TextChanged += new System.EventHandler(this.txtAreaDisplayName_TextChanged);
             // 
             // label5
             // 
@@ -328,13 +320,12 @@
             this.label5.Size = new System.Drawing.Size(180, 25);
             this.label5.TabIndex = 13;
             this.label5.Text = "Area Internal Name";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // btnLinkAll
             // 
             this.btnLinkAll.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnLinkAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLinkAll.Location = new System.Drawing.Point(1155, 882);
+            this.btnLinkAll.Location = new System.Drawing.Point(1147, 881);
             this.btnLinkAll.Name = "btnLinkAll";
             this.btnLinkAll.Size = new System.Drawing.Size(156, 68);
             this.btnLinkAll.TabIndex = 8;

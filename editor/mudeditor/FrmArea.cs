@@ -43,7 +43,6 @@ namespace WindowsFormsApp1 {
             this.over.Paint += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.over_paint);
             lblName.KeyDown += new System.Windows.Forms.KeyEventHandler(keyDown);
             lblName.KeyUp += new System.Windows.Forms.KeyEventHandler(keyUp);
-
         }
 
 
@@ -53,7 +52,7 @@ namespace WindowsFormsApp1 {
                 //if(c is TextBox || c is Button) {
                 c.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
                 c.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
-                
+
                 //}
             }
             fixFocus(sender, e);
@@ -90,8 +89,8 @@ namespace WindowsFormsApp1 {
             int sid = src.id;
             int did;
             Room dest;
-            for(int i = 0; i < 6; i++) {
-                if(src.exit[i] > 0) {
+            for (int i = 0; i < 6; i++) {
+                if (src.exit[i] > 0) {
                     did = src.exit[i];
                     dest = rooms[did];
                     src.exit[i] = 0;
@@ -103,14 +102,14 @@ namespace WindowsFormsApp1 {
 
         void heightUp() {
             curHeight++;
-            lblHeight.Text = curHeight+"";
+            lblHeight.Text = curHeight + "";
             if (curDragRoom > 0) {
                 rooms[curDragRoom].height = curHeight;
                 clearExits(rooms[curDragRoom]);
-            } else if(!linking) {
+            } else if (!linking) {
                 desel();
             }
-            foreach (Room r in rooms.Values) {                
+            foreach (Room r in rooms.Values) {
                 if (r.height == curHeight) {
                     r.panel.Visible = true;
                 } else {
@@ -122,14 +121,14 @@ namespace WindowsFormsApp1 {
 
         void heightDown() {
             curHeight--;
-            lblHeight.Text = curHeight+"";
+            lblHeight.Text = curHeight + "";
             if (curDragRoom > 0) {
                 rooms[curDragRoom].height = curHeight;
                 clearExits(rooms[curDragRoom]);
             } else if (!linking) {
                 desel();
             }
-            foreach (Room r in rooms.Values) {                
+            foreach (Room r in rooms.Values) {
                 if (r.height == curHeight) {
                     r.panel.Visible = true;
                 } else {
@@ -152,7 +151,7 @@ namespace WindowsFormsApp1 {
             } else if (e.KeyCode == Keys.N) {
                 addRoom();
             } else if (e.KeyCode == Keys.L) {
-                if(curSelRoom > 0) {
+                if (curSelRoom > 0) {
                     roomLink();
                 }
             } else if (e.KeyCode == Keys.A) {
@@ -206,12 +205,12 @@ namespace WindowsFormsApp1 {
             }
         }
 
-        void addRoom() {            
+        void addRoom() {
             foreach (Room room in rooms.Values) {
                 room.panel.BackColor = Color.Black;
             }
             Panel panel = new Panel();
-            panel.Location = new System.Drawing.Point(graph.Size.Width/2 - 50, graph.Size.Width/2 - 50);
+            panel.Location = new System.Drawing.Point(graph.Size.Width / 2 - 50, graph.Size.Width / 2 - 50);
             panel.Size = new System.Drawing.Size(100, 100);
             this.graph.Controls.Add(panel);
             Room r = new Room(nextID);
@@ -364,7 +363,7 @@ namespace WindowsFormsApp1 {
                 } else {
                     Room top = src, bottom = dest;
                     int tid = sid, bid = did;
-                    if(src.height < dest.height) {
+                    if (src.height < dest.height) {
                         top = dest;
                         tid = did;
                         bottom = src;
@@ -493,35 +492,38 @@ namespace WindowsFormsApp1 {
             //g.DrawLine(pen, 100, 100, 300, 300);
             Room dest;
             foreach (Room src in rooms.Values) {
+                int sx, dx, sy, dy, mx, my;
                 if (src.height == curHeight) {
                     for (int i = 0; i < 6; i++) {
                         if (src.exit[i] > 0) {
                             if (rooms.TryGetValue(src.exit[i], out dest)) {
-                                if(src.height == dest.height) {
+                                if (src.height == dest.height) {
                                     curPen = pen;
                                 } else {
                                     curPen = dpen;
                                 }
-                                g.DrawLine(curPen, graph.Location.X + src.panel.Location.X + 50 + getExitX(i) + 4, graph.Location.Y + src.panel.Location.Y + 50 + getExitY(i) + 4, graph.Location.X + dest.panel.Location.X + 50 + getExitX(reverseDir(i)) + 4, graph.Location.Y + dest.panel.Location.Y + 50 + getExitY(reverseDir(i)) + 4);
-                                g.FillRectangle(brush, graph.Location.X + src.panel.Location.X + 50 + getExitX(i), graph.Location.Y + src.panel.Location.Y + 50 + getExitY(i), 10, 10);
-                                g.FillRectangle(brush, graph.Location.X + dest.panel.Location.X + 50 + getExitX(reverseDir(i)), graph.Location.Y + dest.panel.Location.Y + 50 + getExitY(reverseDir(i)), 10, 10);
+                                sx = graph.Location.X + src.panel.Location.X + 50 + getExitX(i) + 4;
+                                sy = graph.Location.Y + src.panel.Location.Y + 50 + getExitY(i) + 4;
+                                dx = graph.Location.X + dest.panel.Location.X + 50 + getExitX(reverseDir(i)) + 4;
+                                dy = graph.Location.Y + dest.panel.Location.Y + 50 + getExitY(reverseDir(i)) + 4;
+                                if (i < 4) {
+                                    g.DrawLine(curPen, sx, sy, dx, dy);
+                                } else {
+                                    mx = (int)((float)(sx + dx) / 2f);
+                                    my = (int)((float)(sy + dy) / 2f);
+                                    if(src.height == curHeight) {
+                                        g.DrawLine(curPen, sx, sy, mx, my);
+                                        g.FillRectangle(brush, graph.Location.X + src.panel.Location.X + 50 + getExitX(i), graph.Location.Y + src.panel.Location.Y + 50 + getExitY(i), 10, 10);
+                                    } else {
+                                        g.DrawLine(curPen, dx, dy, mx, my);
+                                        g.FillRectangle(brush, graph.Location.X + dest.panel.Location.X + 50 + getExitX(reverseDir(i)), graph.Location.Y + dest.panel.Location.Y + 50 + getExitY(reverseDir(i)), 10, 10);
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-            //Draw axes (for chopping down trees to make graph paper)
-            //g.DrawLine(blackPen, 0, pic.Height / 2, pic.Width, pic.Height / 2);
-
-            //for (int i = 1; i < pic.Width; i++) { //start at 1 because we use the i before to draw the line to current i. didnt seem to matter as Microsoft doesn't seem to mind out of bounds drawing and handles clipping nicely
-
-            // g.DrawLine(bluePen, i - 1, (float)-Math.Sin(GetRelativeX(i - 1, min, max)) * pic.Height / 2 + pic.Height / 2, i, (float)-Math.Sin(GetRelativeX(i, min, max)) * pic.Height / 2 + pic.Height / 2);
-
-            // }
-
-        }
-
-        private void graph_Paint(object sender, PaintEventArgs e) {
 
         }
 
@@ -539,17 +541,9 @@ namespace WindowsFormsApp1 {
             }
         }
 
-        private void button2_Click_1(object sender, EventArgs e) {
-
-        }
-
         private void txtUpdate_Click(object sender, EventArgs e) {
             updateRoom();
             fixFocus(sender, e);
-        }
-
-        private void btnSouth_Click(object sender, EventArgs e) {
-
         }
 
 
@@ -575,14 +569,6 @@ namespace WindowsFormsApp1 {
             return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
         }
 
-        private void graph_Paint_1(object sender, PaintEventArgs e) {
-
-        }
-
-        private void roomPanel_Paint(object sender, PaintEventArgs e) {
-
-        }
-
         void roomLink() {
             Room r = rooms[curSelRoom];
             foreach (Room r2 in rooms.Values) {
@@ -596,35 +582,11 @@ namespace WindowsFormsApp1 {
             roomLink();
         }
 
-        private void lbl_Click(object sender, EventArgs e) {
-
-        }
-
         private void btnClearExit_Click(object sender, EventArgs e) {
             clearExits(rooms[curSelRoom]);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e) {
-
-        }
-
-        private void txtAreaName_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e) {
-
-        }
-
-        private void lblHeight_Click(object sender, EventArgs e) {
-
-        }
-
-        private void txtAreaDisplayName_TextChanged(object sender, EventArgs e) {
+        private void graph_Paint(object sender, PaintEventArgs e) {
 
         }
     }
