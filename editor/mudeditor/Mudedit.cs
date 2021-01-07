@@ -13,7 +13,8 @@ namespace WindowsFormsApp1 {
         static void Main() {
             //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmArea());
+            FrmArea frm = new FrmArea();
+            Application.Run(frm);
         }
     }
 }

@@ -18,3 +18,7 @@ C:\discmud\editor\mudeditor\bin\Debug\mudeditor.pdb
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.Properties.Resources.resources
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.exe
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.pdb
+C:\discmud\editor\mudeditor\bin\Debug\mudeditor.exe.manifest
+C:\discmud\editor\mudeditor\bin\Debug\mudeditor.application
+C:\discmud\editor\mudeditor\obj\Debug\mudeditor.exe.manifest
+C:\discmud\editor\mudeditor\obj\Debug\mudeditor.application
