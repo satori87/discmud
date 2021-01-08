@@ -50,9 +50,9 @@
             this.txtAreaDisplayName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnLinkAll = new System.Windows.Forms.Button();
-            this.over = new CodeProject.GraphicalOverlay(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.over = new CodeProject.GraphicalOverlay(this.components);
             this.roomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,6 +92,7 @@
             this.roomPanel.Size = new System.Drawing.Size(686, 725);
             this.roomPanel.TabIndex = 5;
             this.roomPanel.Visible = false;
+            this.roomPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.roomPanel_Paint);
             // 
             // btnLinkNearby
             // 
@@ -251,6 +252,8 @@
             this.lblName.Size = new System.Drawing.Size(189, 25);
             this.lblName.TabIndex = 1;
             this.lblName.Text = "Room Display Name";
+            this.lblName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
+            this.lblName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
             // 
             // txtDisplayName
             // 
@@ -267,7 +270,9 @@
             this.graph.Name = "graph";
             this.graph.Size = new System.Drawing.Size(950, 950);
             this.graph.TabIndex = 7;
+            this.graph.Click += new System.EventHandler(this.FixFocus);
             this.graph.Paint += new System.Windows.Forms.PaintEventHandler(this.graph_Paint);
+            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelMouseDown);
             // 
             // lbl
             // 
@@ -346,6 +351,10 @@
             this.button1.Text = "Link All Nearby";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // over
+            // 
+            this.over.Paint += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.over_paint);
+            // 
             // FrmArea
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -368,19 +377,12 @@
             this.Text = "Editing Area";
             this.Load += new System.EventHandler(this.Form_Area_Load);
             this.Click += new System.EventHandler(this.FrmArea_Click);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
             this.roomPanel.ResumeLayout(false);
             this.roomPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
-
-            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(panelMouseDown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(keyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(keyUp);
-            graph.Click += new System.EventHandler(FixFocus);
-            this.over.Paint += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.over_paint);
-            lblName.KeyDown += new System.Windows.Forms.KeyEventHandler(keyDown);
-            lblName.KeyUp += new System.Windows.Forms.KeyEventHandler(keyUp);
 
         }
 

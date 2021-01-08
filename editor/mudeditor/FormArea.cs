@@ -581,5 +581,9 @@ namespace mudeditor {
         private void graph_Paint(object sender, PaintEventArgs e) {
 
         }
+
+        private void roomPanel_Paint(object sender, PaintEventArgs e) {
+
+        }
     }
 }
