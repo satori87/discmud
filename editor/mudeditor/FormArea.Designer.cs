@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1 {
+﻿namespace mudeditor {
     partial class FrmArea {
         /// <summary>
         /// Required designer variable.
@@ -51,6 +51,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnLinkAll = new System.Windows.Forms.Button();
             this.over = new CodeProject.GraphicalOverlay(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.roomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -333,11 +335,23 @@
             this.btnLinkAll.UseVisualStyleBackColor = true;
             this.btnLinkAll.Click += new System.EventHandler(this.button2_Click_2);
             // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(1504, 881);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(156, 68);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Link All Nearby";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // FrmArea
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(1673, 965);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.txtAreaDisplayName);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtAreaName);
@@ -352,12 +366,21 @@
             this.Name = "FrmArea";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editing Area";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Form_Area_Load);
             this.Click += new System.EventHandler(this.FrmArea_Click);
             this.roomPanel.ResumeLayout(false);
             this.roomPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
+
+            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(panelMouseDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(keyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(keyUp);
+            graph.Click += new System.EventHandler(FixFocus);
+            this.over.Paint += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.over_paint);
+            lblName.KeyDown += new System.Windows.Forms.KeyEventHandler(keyDown);
+            lblName.KeyUp += new System.Windows.Forms.KeyEventHandler(keyUp);
 
         }
 
@@ -389,6 +412,8 @@
         private System.Windows.Forms.Button btnLinkNearby;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnLinkAll;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

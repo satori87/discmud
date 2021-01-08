@@ -9,7 +9,6 @@ C:\discmud\editor\WindowsFormsApp1\obj\Debug\mudeditor.csproj.CoreCompileInputs.
 C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\discmud\editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csprojAssemblyReference.cache
-C:\discmud\editor\mudeditor\obj\Debug\WindowsFormsApp1.FrmArea.resources
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csproj.GenerateResource.cache
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csproj.CoreCompileInputs.cache
 C:\discmud\editor\mudeditor\bin\Debug\mudeditor.exe.config
@@ -22,3 +21,7 @@ C:\discmud\editor\mudeditor\bin\Debug\mudeditor.exe.manifest
 C:\discmud\editor\mudeditor\bin\Debug\mudeditor.application
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.exe.manifest
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.application
+C:\discmud\editor\mudeditor\bin\Debug\Newtonsoft.Json.dll
+C:\discmud\editor\mudeditor\bin\Debug\Newtonsoft.Json.xml
+C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csproj.CopyComplete
+C:\discmud\editor\mudeditor\obj\Debug\mudeditor.FrmArea.resources
