@@ -214,7 +214,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(12, 148);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 25);
+            this.label2.Size = new System.Drawing.Size(144, 20);
             this.label2.TabIndex = 5;
             this.label2.Text = "Room Description";
             // 
@@ -232,7 +232,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(339, 25);
+            this.label1.Size = new System.Drawing.Size(293, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "Room Name (internal e.g. for warping)";
             // 
@@ -240,7 +240,7 @@
             // 
             this.txtName.Location = new System.Drawing.Point(17, 43);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(656, 26);
+            this.txtName.Size = new System.Drawing.Size(656, 22);
             this.txtName.TabIndex = 2;
             // 
             // lblName
@@ -249,7 +249,7 @@
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.Location = new System.Drawing.Point(12, 76);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(189, 25);
+            this.lblName.Size = new System.Drawing.Size(163, 20);
             this.lblName.TabIndex = 1;
             this.lblName.Text = "Room Display Name";
             this.lblName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
@@ -259,7 +259,7 @@
             // 
             this.txtDisplayName.Location = new System.Drawing.Point(17, 110);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(656, 26);
+            this.txtDisplayName.Size = new System.Drawing.Size(656, 22);
             this.txtDisplayName.TabIndex = 3;
             // 
             // graph
@@ -280,7 +280,7 @@
             this.lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl.Location = new System.Drawing.Point(969, 13);
             this.lbl.Name = "lbl";
-            this.lbl.Size = new System.Drawing.Size(162, 25);
+            this.lbl.Size = new System.Drawing.Size(138, 20);
             this.lbl.TabIndex = 9;
             this.lbl.Text = "Current Elevation";
             // 
@@ -290,7 +290,7 @@
             this.lblHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeight.Location = new System.Drawing.Point(1152, 10);
             this.lblHeight.Name = "lblHeight";
-            this.lblHeight.Size = new System.Drawing.Size(31, 32);
+            this.lblHeight.Size = new System.Drawing.Size(26, 29);
             this.lblHeight.TabIndex = 10;
             this.lblHeight.Text = "0";
             // 
@@ -300,7 +300,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(969, 92);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(180, 25);
+            this.label4.Size = new System.Drawing.Size(154, 20);
             this.label4.TabIndex = 11;
             this.label4.Text = "Area Display Name";
             // 
@@ -308,14 +308,14 @@
             // 
             this.txtAreaName.Location = new System.Drawing.Point(1155, 55);
             this.txtAreaName.Name = "txtAreaName";
-            this.txtAreaName.Size = new System.Drawing.Size(505, 26);
+            this.txtAreaName.Size = new System.Drawing.Size(505, 22);
             this.txtAreaName.TabIndex = 0;
             // 
             // txtAreaDisplayName
             // 
             this.txtAreaDisplayName.Location = new System.Drawing.Point(1155, 93);
             this.txtAreaDisplayName.Name = "txtAreaDisplayName";
-            this.txtAreaDisplayName.Size = new System.Drawing.Size(505, 26);
+            this.txtAreaDisplayName.Size = new System.Drawing.Size(505, 22);
             this.txtAreaDisplayName.TabIndex = 1;
             // 
             // label5
@@ -324,7 +324,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(969, 54);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(180, 25);
+            this.label5.Size = new System.Drawing.Size(153, 20);
             this.label5.TabIndex = 13;
             this.label5.Text = "Area Internal Name";
             // 

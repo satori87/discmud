@@ -11,6 +11,7 @@ namespace mudeditor {
         /// </summary>
         [STAThread]
         static void Main() {
+
             //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FrmArea frm = new FrmArea();

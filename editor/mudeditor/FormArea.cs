@@ -28,6 +28,8 @@ namespace mudeditor {
         int mDownY = 0;
 
         public FrmArea() {
+            Font = new Font(Font.Name, 8.25f * 96f / CreateGraphics().DpiX, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont);
+            this.AutoScaleMode = AutoScaleMode.None;
             InitializeComponent();
         }
 
