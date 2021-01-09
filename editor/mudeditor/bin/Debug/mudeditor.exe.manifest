@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="mudeditor.exe" size="29656">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="mudeditor.exe" size="32728">
       <assemblyIdentity name="mudeditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8/wARE0aSyeqLzX+80fN1r6OOWaOpMI9VzrAv+ZCdP4=</dsig:DigestValue>
+        <dsig:DigestValue>fp4dKjh1HHLjs0B+JT6KcJXDN3lwXAm2NUxeUrnQ/AU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -15,7 +15,9 @@ namespace mudeditor {
             //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FrmArea frm = new FrmArea();
-            Application.Run(frm);
+            //Application.Run(frm);
+            FormEditor formEditor = new FormEditor();
+            Application.Run(formEditor);
         }
     }
 }

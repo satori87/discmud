@@ -42,3 +42,4 @@ C:\Users\bear\Desktop\discmud\editor\mudeditor\obj\Debug\mudeditor.application
 C:\Users\bear\Desktop\discmud\editor\mudeditor\obj\Debug\mudeditor.csproj.CopyComplete
 C:\Users\bear\Desktop\discmud\editor\mudeditor\obj\Debug\mudeditor.exe
 C:\Users\bear\Desktop\discmud\editor\mudeditor\obj\Debug\mudeditor.pdb
+C:\Users\bear\Desktop\discmud\editor\mudeditor\obj\Debug\mudeditor.FormEditor.resources
