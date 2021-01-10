@@ -54,7 +54,6 @@ namespace MUDEdit {
             //rooms = a.rooms;
             txtAreaName.Text = a.name;
             txtDisplayName.Text = a.displayName;
-            txtLinkArea.Text = a.areaLink;
             roomPanel.Visible = false;
             foreach (Room r in a.rooms.Values) {
                 roomPanel.Visible = true;
@@ -202,6 +201,7 @@ namespace MUDEdit {
                 txtDisplayName.Text = room.displayName;
                 txtDescription.Text = room.desc;
                 txtName.Text = room.name;
+                txtLinkArea.Text = room.linkTo;
             }
         }
 
@@ -213,6 +213,13 @@ namespace MUDEdit {
                     room.desc = txtDescription.Text;
                     room.name = txtName.Text;
                     labels[room.id].Text = txtName.Text;
+                    room.linkTo = txtLinkArea.Text;
+                    if(room.linkTo.Length > 0) {
+                        labels[room.id].BackColor = Color.Purple;
+                    } else {
+                        labels[room.id].BackColor = Color.White;
+                    }
+                    
                 }
             }
         }
@@ -254,6 +261,11 @@ namespace MUDEdit {
                 BorderStyle = BorderStyle.None,
                 Text = id + ": " + r.name
             };
+            if (r.linkTo.Length > 0) {
+                lbl.BackColor = Color.Purple;
+            } else {
+                lbl.BackColor = Color.White;
+            }
             lbl.MouseUp += new System.Windows.Forms.MouseEventHandler(nodeMouseUp);
             lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(nodeMouseDown);
             lbl.MouseMove += new System.Windows.Forms.MouseEventHandler(nodeMouseMove);
@@ -622,7 +634,6 @@ namespace MUDEdit {
         private void btnSave_Click(object sender, EventArgs e) {
             Area a = new Area(txtAreaName.Text);
             a.displayName = txtDisplayName.Text;
-            a.areaLink = txtLinkArea.Text;
             a.rooms = rooms;
             String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
             var con = new MySqlConnection(cs);

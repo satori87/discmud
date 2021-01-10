@@ -90,7 +90,9 @@ namespace MUDEdit {
         }
 
         private void lstArea_DoubleClick(object sender, EventArgs e) {
-            editArea(lstArea.SelectedItem.ToString());
+            if (lstArea.Items.Count > 0 && lstArea.SelectedItem != null) {
+                editArea(lstArea.SelectedItem.ToString());
+            }
         }
 
         void editArea(String name) {

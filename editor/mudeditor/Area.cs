@@ -9,7 +9,6 @@ namespace MUDEdit {
 
         public String name = "";
         public String displayName = "";
-        public String areaLink = "";
 
         public Dictionary<int, Room> rooms = new Dictionary<int, Room>();
 

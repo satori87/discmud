@@ -26,6 +26,8 @@
             this.components = new System.ComponentModel.Container();
             this.btnAddRoom = new System.Windows.Forms.Button();
             this.roomPanel = new System.Windows.Forms.Panel();
+            this.txtLinkArea = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnLinkNearby = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClearExit = new System.Windows.Forms.Button();
@@ -54,8 +56,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.over = new CodeProject.GraphicalOverlay(this.components);
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtLinkArea = new System.Windows.Forms.TextBox();
             this.roomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,6 +98,23 @@
             this.roomPanel.TabIndex = 5;
             this.roomPanel.Visible = false;
             this.roomPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.roomPanel_Paint);
+            // 
+            // txtLinkArea
+            // 
+            this.txtLinkArea.Location = new System.Drawing.Point(17, 575);
+            this.txtLinkArea.Name = "txtLinkArea";
+            this.txtLinkArea.Size = new System.Drawing.Size(644, 26);
+            this.txtLinkArea.TabIndex = 21;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 547);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(171, 25);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "LinkTo AreaName";
             // 
             // btnLinkNearby
             // 
@@ -373,23 +390,6 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 547);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(171, 25);
-            this.label3.TabIndex = 20;
-            this.label3.Text = "LinkTo AreaName";
-            // 
-            // txtLinkArea
-            // 
-            this.txtLinkArea.Location = new System.Drawing.Point(17, 575);
-            this.txtLinkArea.Name = "txtLinkArea";
-            this.txtLinkArea.Size = new System.Drawing.Size(644, 26);
-            this.txtLinkArea.TabIndex = 21;
             // 
             // FormArea
             // 

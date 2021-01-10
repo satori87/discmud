@@ -14,6 +14,7 @@ namespace MUDEdit {
         public int height = 0;
         public int x = 0;
         public int y = 0;
+        public String linkTo = "";
 
         public Room(int id) {
             this.id = id;
