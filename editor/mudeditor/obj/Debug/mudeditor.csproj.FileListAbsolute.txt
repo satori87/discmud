@@ -24,7 +24,6 @@ C:\discmud\editor\mudeditor\obj\Debug\mudeditor.application
 C:\discmud\editor\mudeditor\bin\Debug\Newtonsoft.Json.dll
 C:\discmud\editor\mudeditor\bin\Debug\Newtonsoft.Json.xml
 C:\discmud\editor\mudeditor\obj\Debug\mudeditor.csproj.CopyComplete
-C:\discmud\editor\mudeditor\obj\Debug\mudeditor.FrmArea.resources
 C:\Users\bear\Desktop\discmud\editor\mudeditor\bin\Debug\mudeditor.exe.config
 C:\Users\bear\Desktop\discmud\editor\mudeditor\bin\Debug\mudeditor.exe.manifest
 C:\Users\bear\Desktop\discmud\editor\mudeditor\bin\Debug\mudeditor.application
@@ -99,4 +98,5 @@ C:\discmud\editor\mudeditor\bin\Debug\System.Memory.xml
 C:\discmud\editor\mudeditor\bin\Debug\System.Numerics.Vectors.xml
 C:\discmud\editor\mudeditor\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\discmud\editor\mudeditor\bin\Debug\System.Threading.Tasks.Extensions.xml
-C:\discmud\editor\mudeditor\obj\Debug\mudeditor.FormEditor.resources
+C:\discmud\editor\mudeditor\obj\Debug\MUDEdit.FormArea.resources
+C:\discmud\editor\mudeditor\obj\Debug\MUDEdit.FormEditor.resources

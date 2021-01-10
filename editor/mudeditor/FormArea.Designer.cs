@@ -50,9 +50,12 @@
             this.txtAreaDisplayName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnLinkAll = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.over = new CodeProject.GraphicalOverlay(this.components);
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtLinkArea = new System.Windows.Forms.TextBox();
             this.roomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +63,7 @@
             // 
             this.btnAddRoom.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAddRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddRoom.Location = new System.Drawing.Point(974, 881);
+            this.btnAddRoom.Location = new System.Drawing.Point(974, 890);
             this.btnAddRoom.Name = "btnAddRoom";
             this.btnAddRoom.Size = new System.Drawing.Size(156, 68);
             this.btnAddRoom.TabIndex = 1;
@@ -71,6 +74,8 @@
             // roomPanel
             // 
             this.roomPanel.BackColor = System.Drawing.Color.Silver;
+            this.roomPanel.Controls.Add(this.txtLinkArea);
+            this.roomPanel.Controls.Add(this.label3);
             this.roomPanel.Controls.Add(this.btnLinkNearby);
             this.roomPanel.Controls.Add(this.btnDelete);
             this.roomPanel.Controls.Add(this.btnClearExit);
@@ -89,7 +94,7 @@
             this.roomPanel.Controls.Add(this.txtDisplayName);
             this.roomPanel.Location = new System.Drawing.Point(974, 138);
             this.roomPanel.Name = "roomPanel";
-            this.roomPanel.Size = new System.Drawing.Size(686, 725);
+            this.roomPanel.Size = new System.Drawing.Size(673, 735);
             this.roomPanel.TabIndex = 5;
             this.roomPanel.Visible = false;
             this.roomPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.roomPanel_Paint);
@@ -98,7 +103,7 @@
             // 
             this.btnLinkNearby.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnLinkNearby.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLinkNearby.Location = new System.Drawing.Point(123, 610);
+            this.btnLinkNearby.Location = new System.Drawing.Point(123, 620);
             this.btnLinkNearby.Name = "btnLinkNearby";
             this.btnLinkNearby.Size = new System.Drawing.Size(100, 100);
             this.btnLinkNearby.TabIndex = 19;
@@ -111,18 +116,19 @@
             this.btnDelete.Enabled = false;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(573, 610);
+            this.btnDelete.Location = new System.Drawing.Point(561, 620);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 100);
             this.btnDelete.TabIndex = 18;
             this.btnDelete.Text = "Delete Room";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnClearExit
             // 
             this.btnClearExit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClearExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearExit.Location = new System.Drawing.Point(17, 610);
+            this.btnClearExit.Location = new System.Drawing.Point(17, 620);
             this.btnClearExit.Name = "btnClearExit";
             this.btnClearExit.Size = new System.Drawing.Size(100, 100);
             this.btnClearExit.TabIndex = 16;
@@ -156,7 +162,7 @@
             // 
             this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(229, 610);
+            this.btnUpdate.Location = new System.Drawing.Point(229, 620);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(100, 100);
             this.btnUpdate.TabIndex = 13;
@@ -223,7 +229,7 @@
             this.txtDescription.Location = new System.Drawing.Point(17, 185);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(656, 353);
+            this.txtDescription.Size = new System.Drawing.Size(644, 353);
             this.txtDescription.TabIndex = 4;
             // 
             // label1
@@ -240,7 +246,7 @@
             // 
             this.txtName.Location = new System.Drawing.Point(17, 43);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(656, 26);
+            this.txtName.Size = new System.Drawing.Size(644, 26);
             this.txtName.TabIndex = 2;
             // 
             // lblName
@@ -259,7 +265,7 @@
             // 
             this.txtDisplayName.Location = new System.Drawing.Point(17, 110);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(656, 26);
+            this.txtDisplayName.Size = new System.Drawing.Size(644, 26);
             this.txtDisplayName.TabIndex = 3;
             // 
             // graph
@@ -308,14 +314,14 @@
             // 
             this.txtAreaName.Location = new System.Drawing.Point(1155, 55);
             this.txtAreaName.Name = "txtAreaName";
-            this.txtAreaName.Size = new System.Drawing.Size(505, 26);
+            this.txtAreaName.Size = new System.Drawing.Size(492, 26);
             this.txtAreaName.TabIndex = 0;
             // 
             // txtAreaDisplayName
             // 
             this.txtAreaDisplayName.Location = new System.Drawing.Point(1155, 93);
             this.txtAreaDisplayName.Name = "txtAreaDisplayName";
-            this.txtAreaDisplayName.Size = new System.Drawing.Size(505, 26);
+            this.txtAreaDisplayName.Size = new System.Drawing.Size(492, 26);
             this.txtAreaDisplayName.TabIndex = 1;
             // 
             // label5
@@ -332,7 +338,7 @@
             // 
             this.btnLinkAll.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnLinkAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLinkAll.Location = new System.Drawing.Point(1147, 881);
+            this.btnLinkAll.Location = new System.Drawing.Point(1147, 890);
             this.btnLinkAll.Name = "btnLinkAll";
             this.btnLinkAll.Size = new System.Drawing.Size(156, 68);
             this.btnLinkAll.TabIndex = 8;
@@ -340,27 +346,58 @@
             this.btnLinkAll.UseVisualStyleBackColor = true;
             this.btnLinkAll.Click += new System.EventHandler(this.button2_Click_2);
             // 
-            // button1
+            // btnSave
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(1504, 881);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(156, 68);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "Link All Nearby";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Location = new System.Drawing.Point(1491, 890);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(156, 68);
+            this.btnSave.TabIndex = 14;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // over
             // 
             this.over.Paint += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.over_paint);
             // 
+            // btnCancel
+            // 
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Location = new System.Drawing.Point(1316, 890);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(156, 68);
+            this.btnCancel.TabIndex = 15;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 547);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(171, 25);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "LinkTo AreaName";
+            // 
+            // txtLinkArea
+            // 
+            this.txtLinkArea.Location = new System.Drawing.Point(17, 575);
+            this.txtLinkArea.Name = "txtLinkArea";
+            this.txtLinkArea.Size = new System.Drawing.Size(644, 26);
+            this.txtLinkArea.TabIndex = 21;
+            // 
             // FormArea
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1673, 965);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1658, 965);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtAreaDisplayName);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtAreaName);
@@ -375,6 +412,7 @@
             this.Name = "FormArea";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editing Area";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormArea_FormClosing);
             this.Load += new System.EventHandler(this.Form_Area_Load);
             this.Shown += new System.EventHandler(this.FormArea_Shown);
             this.Click += new System.EventHandler(this.FrmArea_Click);
@@ -415,8 +453,11 @@
         private System.Windows.Forms.Button btnLinkNearby;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnLinkAll;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.TextBox txtLinkArea;
+        private System.Windows.Forms.Label label3;
     }
 }
 

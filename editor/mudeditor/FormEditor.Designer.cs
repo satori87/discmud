@@ -94,6 +94,7 @@ namespace MUDEdit
             this.btnDeleteArea.TabIndex = 4;
             this.btnDeleteArea.Text = "Delete";
             this.btnDeleteArea.UseVisualStyleBackColor = true;
+            this.btnDeleteArea.Click += new System.EventHandler(this.btnDeleteArea_Click);
             // 
             // btnAddArea
             // 
@@ -117,6 +118,7 @@ namespace MUDEdit
             this.btnEditArea.TabIndex = 2;
             this.btnEditArea.Text = "Edit Area";
             this.btnEditArea.UseVisualStyleBackColor = true;
+            this.btnEditArea.Click += new System.EventHandler(this.btnEditArea_Click);
             // 
             // lstArea
             // 
@@ -128,6 +130,8 @@ namespace MUDEdit
             this.lstArea.Name = "lstArea";
             this.lstArea.Size = new System.Drawing.Size(325, 526);
             this.lstArea.TabIndex = 1;
+            this.lstArea.SelectedIndexChanged += new System.EventHandler(this.lstArea_SelectedIndexChanged);
+            this.lstArea.DoubleClick += new System.EventHandler(this.lstArea_DoubleClick);
             // 
             // tabMonster
             // 
@@ -135,7 +139,7 @@ namespace MUDEdit
             this.tabMonster.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.tabMonster.Name = "tabMonster";
             this.tabMonster.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.tabMonster.Size = new System.Drawing.Size(920, 550);
+            this.tabMonster.Size = new System.Drawing.Size(963, 684);
             this.tabMonster.TabIndex = 1;
             this.tabMonster.Text = "Monster";
             this.tabMonster.UseVisualStyleBackColor = true;
@@ -145,7 +149,7 @@ namespace MUDEdit
             this.tabItem.Location = new System.Drawing.Point(4, 38);
             this.tabItem.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.tabItem.Name = "tabItem";
-            this.tabItem.Size = new System.Drawing.Size(920, 550);
+            this.tabItem.Size = new System.Drawing.Size(963, 684);
             this.tabItem.TabIndex = 2;
             this.tabItem.Text = "Item";
             this.tabItem.UseVisualStyleBackColor = true;

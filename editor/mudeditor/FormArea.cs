@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,8 +39,10 @@ namespace MUDEdit {
         private void Form_Area_Load(object sender, EventArgs e) {
             over.Owner = this;
             foreach (Control c in Controls) {
-                c.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
-                c.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
+                if (!(c is TextBox)) {
+                    c.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
+                    c.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
+                }
             }
             FixFocus(sender, e);
         }
@@ -46,8 +50,18 @@ namespace MUDEdit {
 
         private void FormArea_Shown(object sender, EventArgs e) {
             FixFocus(sender, e);
-            rooms = MUDEdit.curArea.rooms;
-
+            Area a = MUDEdit.curArea;
+            //rooms = a.rooms;
+            txtAreaName.Text = a.name;
+            txtDisplayName.Text = a.displayName;
+            txtLinkArea.Text = a.areaLink;
+            roomPanel.Visible = false;
+            foreach (Room r in a.rooms.Values) {
+                roomPanel.Visible = true;
+                addRoom(r, r.id, r.x, r.y);
+                curHeight = r.height;
+                lblHeight.Text = curHeight + "";
+            }
         }
 
 
@@ -229,7 +243,7 @@ namespace MUDEdit {
             };
             panel.Click += new System.EventHandler(FixFocus);
             graph.Controls.Add(panel);
-            panels[id] = panel;            
+            panels[id] = panel;
             panel.BringToFront();
 
             Label lbl = new Label {
@@ -246,6 +260,7 @@ namespace MUDEdit {
             lbl.Click += new System.EventHandler(FixFocus);
             labels[id] = lbl;
             panel.Controls.Add(lbl);
+            selRoom(id);
         }
 
         private void panelMouseDown(object sender, System.Windows.Forms.MouseEventArgs e) {
@@ -594,5 +609,40 @@ namespace MUDEdit {
         private void roomPanel_Paint(object sender, PaintEventArgs e) {
 
         }
+
+        private void FormArea_FormClosing(object sender, FormClosingEventArgs e) {
+            MUDEdit.formEditor.Show();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e) {
+            this.Hide();
+            MUDEdit.formEditor.Show();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e) {
+            Area a = new Area(txtAreaName.Text);
+            a.displayName = txtDisplayName.Text;
+            a.areaLink = txtLinkArea.Text;
+            a.rooms = rooms;
+            String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            var con = new MySqlConnection(cs);
+            con.Open();
+            String stm = "UPDATE area SET json='" + a.GetJSON() + "' WHERE name='" + a.name + "'";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
+            if (cmd.ExecuteNonQuery() < 1) {
+                Interaction.MsgBox("Save area failed SQL");
+            } else {
+                this.Hide();
+                MUDEdit.formEditor.Show();
+                MUDEdit.formEditor.fetchArea();
+            }
+            con.Close();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e) {
+            deleteRoom();
+        }
+
     }
+
 }

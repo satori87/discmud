@@ -28,16 +28,17 @@ namespace MUDEdit {
             fetchArea();
         }
 
-        void fetchArea() {
+        public void fetchArea() {
             String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
             var con = new MySqlConnection(cs);
             con.Open();
             var stm = "SELECT name,json FROM area";
+            World.area = new Dictionary<string, Area>();
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
             MySql.Data.MySqlClient.MySqlDataReader rdr = cmd.ExecuteReader();
             lstArea.Items.Clear();
+            Area a = new Area("a");
             while (rdr.Read()) {
-                Area a = new Area("a");
                 String name = rdr.GetString(0);
                 World.area[name] = (Area)Util.JSONToObject(rdr.GetString(1), a.GetType());
                 lstArea.Items.Add(rdr.GetString(0));
@@ -76,6 +77,48 @@ namespace MUDEdit {
             if (!addArea(Interaction.InputBox("Enter area internal name"))) {
                 Interaction.MsgBox("That area already exists!");
             }
+        }
+
+        private void btnEditArea_Click(object sender, EventArgs e) {
+            if (lstArea.Items.Count > 0 && lstArea.SelectedItem != null) {
+                editArea(lstArea.SelectedItem.ToString());
+            }
+        }
+
+        private void lstArea_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
+
+        private void lstArea_DoubleClick(object sender, EventArgs e) {
+            editArea(lstArea.SelectedItem.ToString());
+        }
+
+        void editArea(String name) {
+            MUDEdit.curArea = World.area[name];
+            MUDEdit.formArea.Show();
+            this.Hide();
+        }
+
+        private void btnDeleteArea_Click(object sender, EventArgs e) {
+            if (lstArea.Items.Count > 0 && lstArea.SelectedItem != null) {
+                deleteArea(lstArea.SelectedItem.ToString());
+            }
+        }
+
+        void deleteArea(String name) {
+            String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            var con = new MySqlConnection(cs);
+            con.Open();
+            String stm = "DELETE FROM area WHERE name='" + name + "'";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
+            if (cmd.ExecuteNonQuery() < 1) {
+                Interaction.MsgBox("Delete area failed SQL");
+            }
+            con.Close();
+            MUDEdit.curArea = null;
+            World.area.Remove(name);
+            fetchArea();
+
         }
     }
 }

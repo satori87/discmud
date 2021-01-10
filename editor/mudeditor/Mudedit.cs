@@ -7,8 +7,8 @@ using System.Windows.Forms;
 namespace MUDEdit {
     static class MUDEdit {
 
-        public static FormArea formArea = new FormArea();
-        public static FormEditor formEditor = new FormEditor();
+        public static FormArea formArea;
+        public static FormEditor formEditor;
 
         public static Area curArea;
 
@@ -17,7 +17,8 @@ namespace MUDEdit {
             World.Start();
             //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            formArea = new FormArea();
+            formEditor = new FormEditor();
             Application.Run(formEditor);
         }
     }
