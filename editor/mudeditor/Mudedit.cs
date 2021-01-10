@@ -4,19 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace mudeditor {
-    static class Mudedit {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+namespace MUDEdit {
+    static class MUDEdit {
+
+        public static FormArea formArea = new FormArea();
+        public static FormEditor formEditor = new FormEditor();
+
+        public static Area curArea;
+
         [STAThread]
         static void Main() {
-
+            World.Start();
             //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            FrmArea frm = new FrmArea();
-            //Application.Run(frm);
-            FormEditor formEditor = new FormEditor();
+
             Application.Run(formEditor);
         }
     }

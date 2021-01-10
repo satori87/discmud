@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mudeditor {
+namespace MUDEdit {
     class Util {
 
-        public static Object JSONToObject(String s) {
-            return JsonConvert.DeserializeObject(s);
+        public static Object JSONToObject(String s, Type c) {
+            return JsonConvert.DeserializeObject(s,c);
         }
 
         public static String ObjectToJSON(Object o) {

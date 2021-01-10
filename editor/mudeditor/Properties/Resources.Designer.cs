@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace mudeditor.Properties {
+namespace MUDEdit.Properties {
     using System;
     
     

@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace mudeditor {
-    public partial class FrmArea : Form {
+namespace MUDEdit {
+    public partial class FormArea : Form {
 
         private Dictionary<int, Room> rooms = new Dictionary<int, Room>();
         private Dictionary<int, Panel> panels = new Dictionary<int, Panel>();
@@ -27,7 +27,7 @@ namespace mudeditor {
         int mDownX = 0;
         int mDownY = 0;
 
-        public FrmArea() {
+        public FormArea() {
             Font = new Font(Font.Name, 8.25f * 96f / CreateGraphics().DpiX, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont);
             this.AutoScaleMode = AutoScaleMode.None;
             InitializeComponent();
@@ -41,8 +41,15 @@ namespace mudeditor {
                 c.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
             }
             FixFocus(sender, e);
+        }
+
+
+        private void FormArea_Shown(object sender, EventArgs e) {
+            FixFocus(sender, e);
+            rooms = MUDEdit.curArea.rooms;
 
         }
+
 
         private void FixFocus(object sender, EventArgs e) {
             this.lbl.Focus();

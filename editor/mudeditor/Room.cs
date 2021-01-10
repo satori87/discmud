@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mudeditor {
+namespace MUDEdit {
     public class Room {
         public string name;
         public string displayName;
