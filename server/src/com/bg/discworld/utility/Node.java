@@ -80,18 +80,62 @@ public class Node {
 		if (mob == null) {
 			return getTileString(tile);
 		} else {
-			return " " + ((p.ally == mob.ally) ? "{{fg:cyan}}" : "{{fg:red}}") + (mob.turn + 1) + "{{fg:default}} ";
+			return "　" + (mob.turn + 1)  + "　";
 		}
+	}
+	
+	
+	
+	public String replaceFull(String s) {
+		s = s.replace("0", "０");
+		s = s.replace("1", "１");
+		s = s.replace("2", "２");
+		s = s.replace("3", "３");
+		s = s.replace("4", "４");
+		s = s.replace("5", "５ ");
+		s = s.replace("6", "６");
+		s = s.replace("7", "７");
+		s = s.replace("8", "８");
+		s = s.replace("9", "９");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		s = s.replace("", "");
+		
+		
+		return s;
 	}
 
 	public String getTileString(int t) {
 		switch (t) {
 		case 1:
-			return "/|\\";
+			return "／｜＼";
 		case 2:
-			return "###";
+			return "＃＃＃";
 		}
-		return "   ";
+		return "　　　";
 	}
 
 	public double getCost() {

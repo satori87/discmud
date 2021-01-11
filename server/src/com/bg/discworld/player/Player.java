@@ -432,26 +432,28 @@ public class Player extends Mobile {
 				Mobile[] con = new Mobile[4];
 				Room r = getRoom();
 				pro[0] = this;
-				pro[1] = world.spawnMonster(r, 1);
-				pro[2] = world.spawnMonster(r, 1);
-				pro[3] = world.spawnMonster(r, 1);
-				con[0] = world.spawnMonster(r, 1);
-				con[1] = world.spawnMonster(r, 1);
-				con[2] = world.spawnMonster(r, 1);
-				con[3] = world.spawnMonster(r, 1);
-
+				pro[1] = world.spawnMonster(r, "slug");
+				pro[2] = world.spawnMonster(r, "slug");
+				pro[3] = world.spawnMonster(r, "slug");
+				con[0] = world.spawnMonster(r, "slug");
+				con[1] = world.spawnMonster(r, "slug");
+				con[1] = world.spawnMonster(r, "slug");
+				con[2] = world.spawnMonster(r, "slug");
+				con[3] = world.spawnMonster(r, "slug");
 				battle = new Battle(mud, getRoom(), pro, con);
-				getRoom().battles.add(battle);
 				for (int a = 0; a < 4; a++) {
 					pro[a].battle = battle;
 					con[a].battle = battle;
 				}
-				// m.battle = battle;
+				
+				getRoom().battles.add(battle);
+				
+				//m.battle = battle;
 				battle.start();
 				break;
 			case "SPAWNMOB":
 				id = Integer.parseInt(word[1]);
-				long uid = world.spawnMonster(getRoom(), (int) id).id;
+				long uid = world.spawnMonster(getRoom(), word[1]).id;
 				if (uid >= 0) {
 					send("Spawned monster " + uid);
 				} else {
@@ -538,8 +540,8 @@ public class Player extends Mobile {
 			Area a = getArea();
 
 			String roomname = MUD.messages.get("ROOM_NAME");
-			roomname = roomname.replace("{{name}}", r.name);
-			roomname = roomname.replace("{{area}}", a.name);
+			roomname = roomname.replace("{{name}}", r.displayName);
+			roomname = roomname.replace("{{area}}", a.displayName);
 			send(roomname);
 
 			String desc = MUD.messages.get("ROOM_DESC");

@@ -8,6 +8,7 @@ import com.bg.discmud.core.MUD;
 import com.bg.discmud.item.ItemSheet;
 import com.bg.discworld.mobile.Monster;
 import com.bg.discworld.mobile.MonsterSheet;
+import com.bg.discworld.utility.Log;
 
 public class World {
 
@@ -26,7 +27,7 @@ public class World {
 	
 	public HashMap<Integer, Monster> monster = new HashMap<>();
 
-	public HashMap<Integer, MonsterSheet> monsterSheets = new HashMap<Integer, MonsterSheet>();
+	public HashMap<String, MonsterSheet> monsterSheets = new HashMap<String, MonsterSheet>();
 	public HashMap<Integer, ItemSheet> itemSheets = new HashMap<Integer, ItemSheet>();
 
 	public static int monsterPointer = 0; // next free monster uid
@@ -41,19 +42,23 @@ public class World {
 		}
 	}
 
-	public Monster spawnMonster(Room r, int id) {
+	public Monster spawnMonster(Room r, String name) {
 		Monster m = null;
 		try {
-			MonsterSheet ms = monsterSheets.get(id);
+			MonsterSheet ms = monsterSheets.get(name);
 			if (ms == null) {
+				Log.debug("null sheet " + name);
 				return null;
 			}
 			int uid = monsterPointer;
 			monsterPointer++;
-			m = new Monster(mud, uid);
+			m = new Monster(mud, name, uid);
 			r.join(m, -1);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		if(m == null) {
+			Log.debug("null m");
 		}
 		return m;
 	}

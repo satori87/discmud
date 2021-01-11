@@ -10,6 +10,7 @@ import com.bg.discworld.mobile.Mobile;
 import com.bg.discworld.mobile.Monster;
 import com.bg.discworld.player.Player;
 import com.bg.discworld.utility.AStarAlgorithm;
+import com.bg.discworld.utility.BCConvert;
 import com.bg.discworld.utility.Grid;
 import com.bg.discworld.utility.Log;
 import com.bg.discworld.utility.Node;
@@ -140,6 +141,7 @@ public class Battle {
 			case "MOV":
 			case "MO":
 			case "M":
+				Log.debug("move");
 				if (cmds.length > 1 && cmds[1].length() == 2) {
 
 				}
@@ -239,7 +241,7 @@ public class Battle {
 		String st = "";
 		try {
 			if (i % 2 == 0) { // its a space line
-				st = "#0000#111|222|333|444|555|666|777|888|999|!!!|@@@|$$$#";
+				st = "＃0000＃111｜222｜333｜444｜555｜666｜777｜888｜999｜!!!｜@@@｜$$$＃";
 				st = st.replace("0000", " " + TextParser.formatNumber(y + 1, 2) + " ");
 				st = st.replace("111", field[0][y].getString(p));
 				st = st.replace("222", field[1][y].getString(p));
@@ -255,7 +257,7 @@ public class Battle {
 				st = st.replace("$$$", field[11][y].getString(p));
 
 			} else { // its a grid line
-				st = "######---+---+---+---+---+---+---+---+---+---+---+---#";
+				st = "＃＃＃＃＃＃－－－＋－－－＋－－－＋－－－＋－－－＋－－－＋－－－＋－－－＋－－－＋－－－＋－－－＋－－－＃";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -265,13 +267,14 @@ public class Battle {
 
 	void showBattle(Player p) {
 		try {
-			String header = "################################################################################\r\n"
-					+ "#    # A # B # C # D # E # F # G # H # I # J # K # L # TURN        NAME        #\r\n"
-					+ "################################################################################";
-			String footer = "################################################################################";
+			String header = "＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃\r\n"
+					+ "＃　　　　＃　Ａ　＃　Ｂ　＃　Ｃ　＃　Ｄ　＃　Ｅ　＃　F　＃　G　＃　H　＃　I　＃　J　＃　K　＃　L　＃　TURN　　　　　　　　NAME　　　　　　　　＃\r\n"
+					+ "＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃";
+			header = BCConvert.bj2qj(header);
+			String footer = "＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃";
 			p.send(header);
 			for (int i = 22; i >= 0; i--) {
-				p.send(battleLine(p, i) + turnLine(i));
+				p.send(BCConvert.bj2qj(battleLine(p, i) + turnLine(i)));
 			}
 			p.send(footer);
 		} catch (Exception e) {
@@ -735,7 +738,7 @@ public class Battle {
 			double total = 0;
 			for (int x = 0; x < 12; x++) {
 				for (int y = 0; y < 12; y++) {
-					Log.debug(x + "," + y);
+					//Log.debug(x + "," + y);
 					if (Formula.distance(x, y, m.x, m.y) <= (double) ((m.getSpeed() + 1) / 5)) {
 						total = 0;
 						end = grid.find(x, y);

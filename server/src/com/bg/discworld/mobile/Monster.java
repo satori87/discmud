@@ -4,17 +4,17 @@ import com.bg.discmud.core.MUD;
 import com.bg.discworld.battle.Formula;
 
 public class Monster extends Mobile {
-
+	public String name = "";
 	public long nextMoveAt = 0; // to add delay to monsters
 	public int moveState = 0; // 0 = finished first delay, act, 1 = finished action, end turn
 
-	public Monster(MUD mud, int id) {
+	public Monster(MUD mud, String name, int id) {
 		super(mud, id);
 		try {
-			this.id = id;
+			this.name = name;
 			active = true;
 			isMonster = true;
-			fields.putAll(world.monsterSheets.get(id).fields);
+			fields.putAll(world.monsterSheets.get(name).fields);
 			//fields.put("hit_dice_modifier", 0);
 			//fields.put("melee_damage_modifier", 3);
 			//fields.put("melee_damage_dice", 2);

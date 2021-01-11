@@ -29,8 +29,8 @@ public class BattleTurn extends ArrayList<Mobile> {
 	public void determineOrder() {
 		Collections.sort(this, new Comparator<Mobile>() {
 			public int compare(Mobile o1, Mobile o2) {
-				float co1 = Formula.initiativeCheck(o1);
-				float co2 = Formula.initiativeCheck(o2);
+				float co1 = o1.getTurnSpeed();
+				float co2 = o2.getTurnSpeed();
 				if (co1 == co2)
 					return 0;
 				return co1 > co2 ? -1 : 1;

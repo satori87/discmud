@@ -52,6 +52,17 @@ public class Mobile {
 
 		equipment = new Equipment();
 	}
+	
+	public Mobile(MUD mud) {
+		this.mud = mud;
+		this.world = mud.world;
+		inventory = new Container(mud, 100.0, 1.0, true);
+		equipment = new Equipment();
+	}
+	
+	public float getTurnSpeed() {
+		return 1.0f;
+	}
 
 	public String getFullID() { // this is how player is represented in logs
 		try {
@@ -178,7 +189,8 @@ public class Mobile {
 
 	public boolean frontRow() {
 		try {
-			return (boolean) fields.get("front_row");
+			//return (boolean) fields.get("front_row");
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -283,7 +295,9 @@ public class Mobile {
 		boolean hit = (hitroll == 20) || (hitroll > 1 && hitroll + hitbonus > ac);
 		String st = name + " rolls 1d20" + sign + " to hit " + nmeName + " (AC:" + ac + ") and rolls a "
 				+ (hitroll + hitbonus) + ". " + (hit ? "SUCCESS" : "FAILURE");
-		battle.sendAll(st);
+		if(battle != null) {
+			battle.sendAll(st);
+		}
 		if (hitroll == 0) {
 			battle.sendAll(name + " curses angry fairies for its embarassing display.");
 		} else if (hit) {

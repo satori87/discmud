@@ -28,7 +28,7 @@ public class MUD {
 	public static final String token = "NzkzNjEzNjU2MjY0MTQ2OTc1.X-u0UA.vn9Ba-ZmiJKYKwyMjIhLBXpvri0";
 
 	public static final int MONSTER_ACTION_DELAY = 500;
-	public static final int PLAYER_TURN_TIME = 400;
+	public static final int PLAYER_TURN_TIME = 3000;
 	public static final int PLAYER_TURN_TIME_RUSHED = 3000;
 
 	public static final long ACTIVE_IDLE_TIME = 3600;
@@ -253,7 +253,7 @@ public class MUD {
 					m.fields.put(s, rs.getObject(c));
 					c++;
 				}
-				world.monsterSheets.put((int) m.fields.get("id"), m);
+				world.monsterSheets.put((String) m.fields.get("name"), m);
 			}
 
 			rs = MySQL.querySQL("SELECT " + Model.itemModel + " FROM item");
