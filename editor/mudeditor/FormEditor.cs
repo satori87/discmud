@@ -65,6 +65,7 @@ namespace MUDEdit {
                 con.Close();
                 fetchArea();
                 MUDEdit.curArea = World.area[name];
+                MUDEdit.formArea = new FormArea();
                 MUDEdit.formArea.Show();
                 this.Hide();
                 return true;
@@ -96,7 +97,9 @@ namespace MUDEdit {
         }
 
         void editArea(String name) {
+            
             MUDEdit.curArea = World.area[name];
+            MUDEdit.formArea = new FormArea();
             MUDEdit.formArea.Show();
             this.Hide();
         }

@@ -17,6 +17,8 @@ import com.bg.discworld.player.QueryPlayerResult;
 import com.bg.discworld.player.QueryPlayerRunnable;
 import com.bg.discworld.utility.Log;
 import com.bg.discworld.utility.TextParser;
+import com.bg.discworld.utility.Util;
+import com.bg.discworld.world.Area;
 import com.bg.discworld.world.World;
 
 public class MUD {
@@ -32,22 +34,22 @@ public class MUD {
 	public static final long ACTIVE_IDLE_TIME = 3600;
 	public static final long PLAYING_IDLE_TIME = 600;
 	public static final long PART_TIME = 10;
-	
+
 	public static final long LOGGING_CHANNEL = 795377451895226371L;
 
 	public static HashMap<String, String> messages = new HashMap<String, String>();
 	public static HashMap<String, CommandData> commands = new HashMap<String, CommandData>();
 
 	public World world;
-	public static volatile HashMap<Long, Player> players = new HashMap<Long, Player>();
+	public static HashMap<Long, Player> players = new HashMap<Long, Player>();
 	public static HashMap<String, Object> generalScriptFields = new HashMap<String, Object>();
 
 	boolean shutdown = false;
 
-	public static volatile ConcurrentLinkedQueue<MessageCreateEvent> incoming = new ConcurrentLinkedQueue<MessageCreateEvent>();
+	public static ConcurrentLinkedQueue<MessageCreateEvent> incoming = new ConcurrentLinkedQueue<MessageCreateEvent>();
 	public static DiscordApi api;
 
-	public static volatile ConcurrentLinkedQueue<QueryPlayerResult> queryPlayerResults = new ConcurrentLinkedQueue<QueryPlayerResult>();
+	public static ConcurrentLinkedQueue<QueryPlayerResult> queryPlayerResults = new ConcurrentLinkedQueue<QueryPlayerResult>();
 
 	public static long tick = System.currentTimeMillis();
 
@@ -99,7 +101,7 @@ public class MUD {
 				new Thread(new QueryPlayerRunnable(event)).start();
 			} else {
 				player.lastMessage = tick;
-				if(player.parting) {
+				if (player.parting) {
 					player.parting = false;
 					player.send(messages.get("PART_CANCELLED"));
 				}
@@ -121,13 +123,13 @@ public class MUD {
 	void flushMessages() {
 		for (Player p : players.values()) {
 			if (p.active) {
-				if(p.cancelConfirmation) {
-					if(tick > p.cancelConfirmationStamp) {
+				if (p.cancelConfirmation) {
+					if (tick > p.cancelConfirmationStamp) {
 						p.cancelConfirmation = false;
 					}
 				}
-				if(p.deleteConfirmation) {
-					if(tick > p.deleteConfirmationStamp) {
+				if (p.deleteConfirmation) {
+					if (tick > p.deleteConfirmationStamp) {
 						p.deleteConfirmation = false;
 					}
 				}
@@ -237,30 +239,9 @@ public class MUD {
 				commands.put(rs.getString(1), new CommandData(rs.getString(1), rs.getString(2), rs.getString(3)));
 			}
 
-			int id = 0;
-			rs = MySQL.querySQL(
-					"SELECT id,name,description,exit_north_id,exit_east_id,exit_south_id,exit_west_id,exit_up_id,exit_down_id,area_id FROM map_room");
+			rs = MySQL.querySQL("SELECT name,json FROM area");
 			while (rs.next()) {
-				id = rs.getInt(1);
-				world.room[id].id = id;
-				world.room[id].name = TextParser.replace(rs.getString(2));
-				world.room[id].desc = TextParser.replace(rs.getString(3));
-				for (i = 0; i < 6; i++) {
-					world.room[id].exit[i] = rs.getInt(i + 4);
-				}
-				world.room[id].area = rs.getInt(10);
-				if (id > 0) {
-					world.room[id].active = true;
-				}
-				Log.info("Loading room " + id + " [" + world.room[id].name + "]");
-			}
-
-			rs = MySQL.querySQL("SELECT id,name FROM map_area");
-			while (rs.next()) {
-				id = rs.getInt(1);
-				world.area[id].id = id;
-				world.area[id].name = TextParser.replace(rs.getString(2));
-				Log.info("Loading area " + id + " [" + world.area[id].name + "]");
+				world.area.put(rs.getString(1), (Area) Util.fromJSON(rs.getString(2), Area.class));
 			}
 
 			rs = MySQL.querySQL("SELECT " + Model.monsterModel + " FROM monster");

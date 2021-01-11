@@ -22,6 +22,7 @@ import java.util.zip.InflaterInputStream;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
@@ -47,11 +48,20 @@ public class Util {
 
 	public static void exportJSON(String filename, Object o) {
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			writeFile(filename, mapper.writeValueAsString(o));
+			writeFile(filename, toJSON(o));
 		} catch (Exception e) {
 			Log.error(e);
 		}
+	}
+	
+	public static String toJSON(Object o) {		
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.writeValueAsString(o);
+		} catch (Exception e) {
+			Log.error(e);
+		}
+		return "";
 	}
 
 	public static boolean exists(String filename) {
@@ -62,6 +72,11 @@ public class Util {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Object importJSON(String filename, Class c) {
 		String json = readFile(filename);
+		return fromJSON(json, c);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Object fromJSON(String json, Class c) {
 		if (json.length() > 0) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {

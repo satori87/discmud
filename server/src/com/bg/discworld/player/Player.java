@@ -85,8 +85,12 @@ public class Player extends Mobile {
 			String join = MUD.messages.get("ANOTHER_USER_JOIN").replace("{{name}}", (String) fields.get("name"));
 			mud.sendChannel("logging", join);
 			// send(MUD.messages.get("USER_JOIN"));
-			if (!getRoom().active)
-				setRoom(1);
+			//if (!getRoom().active)
+			if(getRoom() == null) {
+				Log.debug("null room");
+				fields.put("area", "town");
+				setRoom(getArea().rooms.get(1));
+			}
 			getRoom().join(this, -1);
 			Log.info(getFullID() + " join");
 		} catch (Exception e) {
@@ -99,11 +103,13 @@ public class Player extends Mobile {
 			if (playing) {
 				if (parting) {
 					if (MUD.tick > partStamp) {
-						part(MUD.messages.get("PARTING"), MUD.messages.get("ANOTHER_USER_PART").replace("{{name}}", getName()));
+						part(MUD.messages.get("PARTING"),
+								MUD.messages.get("ANOTHER_USER_PART").replace("{{name}}", getName()));
 					}
 				} else if (MUD.tick - lastMessage > MUD.PLAYING_IDLE_TIME * 1000) {
 					if (canPart()) {
-						part(MUD.messages.get("IDLE_MESSAGE"), MUD.messages.get("ANNOUNCE_PART_INACTIVE").replace("{{name}}", getName()));
+						part(MUD.messages.get("IDLE_MESSAGE"),
+								MUD.messages.get("ANNOUNCE_PART_INACTIVE").replace("{{name}}", getName()));
 					} else {
 						Log.debug("battle thing");
 					}
@@ -189,7 +195,7 @@ public class Player extends Mobile {
 	}
 
 	public boolean hasAccess() {
-		return ((int)fields.get("admin") > 0);
+		return ((int) fields.get("admin") > 0);
 	}
 
 	public void idleMsg() {
@@ -201,14 +207,15 @@ public class Player extends Mobile {
 		}
 	}
 
-	public void moveTo(int nextRoom, int dir) {
+	public void moveTo(Area area, Room room, int dir) {
 		try {
 			String exit = MUD.messages.get("USER_EXIT");
-			send(exit.replace("{{travel:direction}}", Room.getStdExitName(dir)).replace("{{travel:mode}}", getTravelVerb(dir)));
+			send(exit.replace("{{travel:direction}}", Room.getStdExitName(dir)).replace("{{travel:mode}}",
+					getTravelVerb(dir)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		super.moveTo(nextRoom, dir);
+		super.moveTo(area, room, dir);
 	}
 
 	@Override
@@ -217,14 +224,31 @@ public class Player extends Mobile {
 	}
 
 	public void exit(int i) {
-		Log.info(getFullID() + " exiting room " + getRoom() + " by exit " + Room.getStdExitName(i));
+		Log.info(getFullID() + " exiting room " + getRoom().name + " by exit " + Room.getStdExitName(i));
 		try {
+			Area area = getArea();
 			int nextRoom = getRoom().exit[i];
+			Room nr = area.rooms.get(nextRoom);
 			if (nextRoom > 0) {
-				if (world.room[nextRoom].active) {
-					moveTo(nextRoom, i);
+				if (nr.linkTo.length() > 0) {
+					// exit to another area
+					area = world.area.get(nr.linkTo);
+					Log.debug("area:" + area);
+					nr = area.searchRoom(nr.name);
+					Log.debug("room:" + nr.id);
+					if(nr != null) {
+						moveTo(area, nr, i);
+					} else {
+						send(MUD.messages.get("BAD_EXIT"));
+					}
 				} else {
-					send(MUD.messages.get("BAD_EXIT"));
+					// move within area
+					// if (world.area[])
+					//if (nr.active) {
+						moveTo(area, nr, i);
+					//} else {
+						//send(MUD.messages.get("BAD_EXIT"));
+					//}
 				}
 			} else {
 				send(MUD.messages.get("BAD_EXIT"));
@@ -304,20 +328,20 @@ public class Player extends Mobile {
 					case "EAS":
 					case "EA":
 					case "E":
-						exit(1);
+						exit(3);
 						break;
 					case "SOUTH":
 					case "SOUT":
 					case "SOU":
 					case "SO":
 					case "S":
-						exit(2);
+						exit(1);
 						break;
 					case "WEST":
 					case "WES":
 					case "WE":
 					case "W":
-						exit(3);
+						exit(2);
 						break;
 					case "UP":
 					case "U":
@@ -355,14 +379,17 @@ public class Player extends Mobile {
 						break;
 					case "TEST":
 						EmbedBuilder eb = new EmbedBuilder();
-						for(int i = 1; i < 20; i++) {							
+						for (int i = 1; i < 20; i++) {
 							eb.addInlineField("Weapon", "item name " + i);
 							eb.addInlineField("Weapon", "item name " + i);
 							eb.addInlineField("Weapon", "item name " + i);
 							eb.addInlineField("Weapon", "item name " + i);
-							eb.setImage("https://www.google.com/url?sa=i&url=https%3A%2F%2Fdisolncomment.blogspot.com%2F2013%2F06%2Fprocessing-multibyte-characters-like.html&psig=AOvVaw3_-_9XDU4GBVNempDi74v7&ust=1609806023999000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOCH3vOAge4CFQAAAAAdAAAAABAO");
-							eb.setDescription("whahuf feijowg4 efet24opj eoe t4t4 poeijewf iop4tr fijwfiweof jiw4ofweew fewjiofe oiewf ewiojfewfewfoij ewfijoewf iojefi ojewfewiojfef. f ewoifjewiojfjoiwefoi ewiojfewoi feiojf iowjefiojwef wef jioewiojf ew iojfewfioj iojwef ijoefi ewoif ef");
-							eb.setTitle("REAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLY LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG YTIIIIIIYLE");
+							eb.setImage(
+									"https://www.google.com/url?sa=i&url=https%3A%2F%2Fdisolncomment.blogspot.com%2F2013%2F06%2Fprocessing-multibyte-characters-like.html&psig=AOvVaw3_-_9XDU4GBVNempDi74v7&ust=1609806023999000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOCH3vOAge4CFQAAAAAdAAAAABAO");
+							eb.setDescription(
+									"whahuf feijowg4 efet24opj eoe t4t4 poeijewf iop4tr fijwfiweof jiw4ofweew fewjiofe oiewf ewiojfewfewfoij ewfijoewf iojefi ojewfewiojfef. f ewoifjewiojfjoiwefoi ewiojfewoi feiojf iowjefiojwef wef jioewiojf ew iojfewfioj iojwef ijoefi ewoif ef");
+							eb.setTitle(
+									"REAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLY LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG YTIIIIIIYLE");
 						}
 						channel.sendMessage(eb);
 						break;
@@ -403,14 +430,15 @@ public class Player extends Mobile {
 			case "SEXY":
 				Mobile[] pro = new Mobile[4];
 				Mobile[] con = new Mobile[4];
+				Room r = getRoom();
 				pro[0] = this;
-				pro[1] = world.spawnMonster((int) fields.get("room"), 1);
-				pro[2] = world.spawnMonster((int) fields.get("room"), 1);
-				pro[3] = world.spawnMonster((int) fields.get("room"), 1);
-				con[0] = world.spawnMonster((int) fields.get("room"), 1);
-				con[1] = world.spawnMonster((int) fields.get("room"), 1);
-				con[2] = world.spawnMonster((int) fields.get("room"), 1);
-				con[3] = world.spawnMonster((int) fields.get("room"), 1);
+				pro[1] = world.spawnMonster(r, 1);
+				pro[2] = world.spawnMonster(r, 1);
+				pro[3] = world.spawnMonster(r, 1);
+				con[0] = world.spawnMonster(r, 1);
+				con[1] = world.spawnMonster(r, 1);
+				con[2] = world.spawnMonster(r, 1);
+				con[3] = world.spawnMonster(r, 1);
 
 				battle = new Battle(mud, getRoom(), pro, con);
 				getRoom().battles.add(battle);
@@ -423,7 +451,7 @@ public class Player extends Mobile {
 				break;
 			case "SPAWNMOB":
 				id = Integer.parseInt(word[1]);
-				long uid = world.spawnMonster((int) fields.get("room"), id).id;
+				long uid = world.spawnMonster(getRoom(), (int) id).id;
 				if (uid >= 0) {
 					send("Spawned monster " + uid);
 				} else {
@@ -431,12 +459,12 @@ public class Player extends Mobile {
 				}
 				break;
 			case "WARP":
-				moveTo(Integer.parseInt(word[1]), -2);
+				//moveTo(Integer.parseInt(word[1]), -2);
 				break;
 			case "WARPTO":
 				p = mud.findPlayer(word[1]);
 				if (p != null) {
-					moveTo(p.getRoom().id, -2);
+					//moveTo((int) p.getRoom().id, -2);
 				}
 				break;
 			case "FETCH":
@@ -507,11 +535,7 @@ public class Player extends Mobile {
 	public void look(boolean notify) {
 		try {
 			Room r = getRoom();
-			Area a = world.area[r.area];
-
-			if (r.header.length() > 0) {
-				send("\n" + r.header);
-			}
+			Area a = getArea();
 
 			String roomname = MUD.messages.get("ROOM_NAME");
 			roomname = roomname.replace("{{name}}", r.name);
@@ -524,9 +548,9 @@ public class Player extends Mobile {
 
 			String exits = MUD.messages.get("ROOM_EXITS");
 			exits = exits.replace("{{exit_north}}", r.getExitString(0));
-			exits = exits.replace("{{exit_east}}", r.getExitString(1));
-			exits = exits.replace("{{exit_south}}", r.getExitString(2));
-			exits = exits.replace("{{exit_west}}", r.getExitString(3));
+			exits = exits.replace("{{exit_east}}", r.getExitString(3));
+			exits = exits.replace("{{exit_south}}", r.getExitString(1));
+			exits = exits.replace("{{exit_west}}", r.getExitString(2));
 			exits = exits.replace("{{exit_up}}", r.getExitString(4));
 			exits = exits.replace("{{exit_down}}", r.getExitString(5));
 			send(exits);

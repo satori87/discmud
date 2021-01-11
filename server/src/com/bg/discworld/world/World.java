@@ -11,41 +11,37 @@ import com.bg.discworld.mobile.MonsterSheet;
 
 public class World {
 
-	public volatile String name = "Tidebreak";
+	public String name = "Tidebreak";
 
 	MUD mud;
 
-	public volatile Area[] area = new Area[100];
-	public volatile Room[] room = new Room[100000];
+	//public Area[] area = new Area[100];
+	//public Room[] room = new Room[100000];
 
 	 //public Map<Integer, Area> area = new HashMap<>(); //come back and do
 	// this
-	 //public Map<Integer, Room> room = new HashMap<>();
+	// public Map<Integer, Room> room = new HashMap<>();
 
-	public volatile Map<Integer, Monster> monster = new HashMap<>();
+	public HashMap<String, Area> area = new HashMap<String, Area>();
+	
+	public HashMap<Integer, Monster> monster = new HashMap<>();
 
-	public volatile LongMap<MonsterSheet> monsterSheets = new LongMap<MonsterSheet>();
-	public volatile LongMap<ItemSheet> itemSheets = new LongMap<ItemSheet>();
+	public HashMap<Integer, MonsterSheet> monsterSheets = new HashMap<Integer, MonsterSheet>();
+	public HashMap<Integer, ItemSheet> itemSheets = new HashMap<Integer, ItemSheet>();
 
-	public volatile static int monsterPointer = 0; // next free monster uid
+	public static int monsterPointer = 0; // next free monster uid
 
 	public World(MUD mud) {
 		this.mud = mud;
-		for (int i = 0; i < 100; i++) {
-			area[i] = new Area(mud, this, i);
-		}
-		for (int i = 0; i < 100000; i++) {
-			room[i] = new Room(mud, this, 0, i);
-		}
 	}
 
 	public void update(long tick) {
-		for (Room r : room) {
-			r.update(tick);
+		for(Area a : area.values()) {
+			a.update(tick);
 		}
 	}
 
-	public Monster spawnMonster(int r, long id) {
+	public Monster spawnMonster(Room r, int id) {
 		Monster m = null;
 		try {
 			MonsterSheet ms = monsterSheets.get(id);
@@ -55,7 +51,7 @@ public class World {
 			int uid = monsterPointer;
 			monsterPointer++;
 			m = new Monster(mud, uid);
-			room[r].join(m, -1);
+			r.join(m, -1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

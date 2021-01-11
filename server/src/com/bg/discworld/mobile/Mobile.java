@@ -11,6 +11,7 @@ import com.bg.discworld.battle.Formula;
 import com.bg.discworld.player.Player;
 import com.bg.discworld.utility.Log;
 import com.bg.discworld.utility.TextParser;
+import com.bg.discworld.world.Area;
 import com.bg.discworld.world.Room;
 import com.bg.discworld.world.World;
 
@@ -69,27 +70,38 @@ public class Mobile {
 		try {
 			int room = (int) fields.get("room");
 			Log.debug("getroom" + room);
-			return world.room[room];
+			return getArea().rooms.get(room);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return world.room[0];
+		return null;
 	}
-
-	public void setRoom(int room) {
+	
+	public Area getArea() {
 		try {
-			Log.debug("setroom " + room);
-			fields.put("room", room);
+			String area = (String) fields.get("area");
+			return world.area.get(area);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void setRoom(Room room) {
+		try {
+			Log.debug("setroom " + room.id);
+			fields.put("room", room.id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void moveTo(int nextRoom, int dir) {
-		Log.debug(getFullID() + " move to " + nextRoom);
+	public void moveTo(Area area, Room room, int dir) {
+		Log.debug(getFullID() + " move to " + room.id + " " + area.name);
 		try {
 			getRoom().part(this, dir);
-			setRoom(nextRoom);
+			fields.put("area", area.name);
+			setRoom(room);			
 			getRoom().join(this, dir);
 		} catch (Exception e) {
 			e.printStackTrace();

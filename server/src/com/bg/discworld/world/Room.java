@@ -11,34 +11,40 @@ import com.bg.discworld.utility.Log;
 
 public class Room {
 
-	public volatile boolean active = false;
+	// public boolean active = false;
 	MUD mud;
 	World world;
-	public volatile int id = 0;
-	public volatile int area = 0;
-	public volatile String name = "Room";
-	public volatile String desc = "Description";
-	public volatile String notes = "Notes";
-	public volatile String header = "";
 
-	public volatile int[] exit; // NESWUD
+	public int id = 0;
+	public String name = "Room";
+	public String desc = "Description";
 
-	public volatile LinkedList<Mobile> mobs = new LinkedList<Mobile>();
-	public volatile LinkedList<Player> players = new LinkedList<Player>();
-	public volatile LinkedList<Monster> monsters = new LinkedList<Monster>();
+	public String displayName;
+	public int[] exit = new int[6];
+	public int height = 0;
+	public int x = 0;
+	public int y = 0;
+	public String linkTo = "";
 
-	public volatile LinkedList<Battle> battles = new LinkedList<Battle>();
+	public LinkedList<Mobile> mobs = new LinkedList<Mobile>();
+	public LinkedList<Player> players = new LinkedList<Player>();
+	public LinkedList<Monster> monsters = new LinkedList<Monster>();
 
-	public Room(MUD mud, World world, int area_id, int id) {
+	public LinkedList<Battle> battles = new LinkedList<Battle>();
+
+	public Room() {
+
+	}
+
+	public Room(MUD mud, World world, int id) {
 		this.mud = mud;
 		this.world = world;
-		this.area = area_id;
 		exit = new int[10];
 		name = "Room " + this.id;
 	}
 
 	public boolean command(Player p, String cmd) {
-		//run script here, return false if script executed a command
+		// run script here, return false if script executed a command
 		return true;
 	}
 
@@ -58,11 +64,11 @@ public class Room {
 		case 0:
 			return "north";
 		case 1:
-			return "east";
-		case 2:
 			return "south";
-		case 3:
+		case 2:
 			return "west";
+		case 3:
+			return "east";
 		case 4:
 			return "up";
 		case 5:
@@ -110,18 +116,18 @@ public class Room {
 	public static String getArrivalString(int d) {
 		try {
 			switch (d) {
-			case 2:
-				return MUD.messages.get("JOIN_DIRECTION_NORTH");
-			case 3:
-				return MUD.messages.get("JOIN_DIRECTION_EAST");
 			case 0: //
 				return MUD.messages.get("JOIN_DIRECTION_SOUTH");
 			case 1:
+				return MUD.messages.get("JOIN_DIRECTION_NORTH");
+			case 2:
+				return MUD.messages.get("JOIN_DIRECTION_EAST");
+			case 3:
 				return MUD.messages.get("JOIN_DIRECTION_WEST");
-			case 5:
-				return MUD.messages.get("JOIN_DIRECTION_UP");
 			case 4:
 				return MUD.messages.get("JOIN_DIRECTION_DOWN");
+			case 5:
+				return MUD.messages.get("JOIN_DIRECTION_UP");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -134,12 +140,12 @@ public class Room {
 			switch (d) {
 			case 0:
 				return MUD.messages.get("PART_DIRECTION_NORTH");
-			case 1:
-				return MUD.messages.get("PART_DIRECTION_EAST");
-			case 2: //
+			case 1: //
 				return MUD.messages.get("PART_DIRECTION_SOUTH");
-			case 3:
+			case 2:
 				return MUD.messages.get("PART_DIRECTION_WEST");
+			case 3:
+				return MUD.messages.get("PART_DIRECTION_EAST");
 			case 4:
 				return MUD.messages.get("PART_DIRECTION_UP");
 			case 5:
@@ -177,20 +183,21 @@ public class Room {
 			}
 			if (mob.isPlayer && dir != -1) {
 				((Player) mob).look(false);
-				//roomScript("join", MUD.generalScriptFields, new Object[] { this, mob, dir });
+				// roomScript("join", MUD.generalScriptFields, new Object[] { this, mob, dir });
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean say(Mobile mob, String rest) {
-		//LinkedList<Object> result = roomScript("say", MUD.generalScriptFields, new Object[] { this, mob, rest });
-		//for (Object o : result) {
+		// LinkedList<Object> result = roomScript("say", MUD.generalScriptFields, new
+		// Object[] { this, mob, rest });
+		// for (Object o : result) {
 		// ((boolean) o == false) {
-		//		return false;
-		//	}
-		//}
+		// return false;
+		// }
+		// }
 		mob.say(rest);
 		return true;
 	}
@@ -217,7 +224,7 @@ public class Room {
 				sendAllCanSeeBut(mob, s);
 			}
 			if (mob.isPlayer) {
-				//roomScript("part", MUD.generalScriptFields, new Object[] { this, mob, dir });
+				// roomScript("part", MUD.generalScriptFields, new Object[] { this, mob, dir });
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

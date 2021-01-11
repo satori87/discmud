@@ -52,6 +52,7 @@ namespace MUDEdit {
             FixFocus(sender, e);
             Area a = MUDEdit.curArea;
             //rooms = a.rooms;
+            rooms = new Dictionary<int, Room>();
             txtAreaName.Text = a.name;
             txtDisplayName.Text = a.displayName;
             roomPanel.Visible = false;
@@ -259,7 +260,7 @@ namespace MUDEdit {
                 Size = new System.Drawing.Size(96, 96),
                 AccessibleName = id + "",
                 BorderStyle = BorderStyle.None,
-                Text = id + ": " + r.name
+                Text = r.name
             };
             if (r.linkTo.Length > 0) {
                 lbl.BackColor = Color.Purple;
