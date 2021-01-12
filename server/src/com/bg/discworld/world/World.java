@@ -47,10 +47,10 @@ public class World {
 		try {
 			MonsterSheet ms = monsterSheets.get(name);
 			if (ms == null) {
-				Log.debug("null sheet " + name);
+				//Log.debug("null sheet " + name);
 				return null;
 			}
-			int uid = monsterPointer;
+			long uid = monsterPointer;
 			monsterPointer++;
 			m = new Monster(mud, name, uid);
 			r.join(m, -1);
@@ -58,7 +58,7 @@ public class World {
 			e.printStackTrace();
 		}
 		if(m == null) {
-			Log.debug("null m");
+			//Log.debug("null m");
 		}
 		return m;
 	}

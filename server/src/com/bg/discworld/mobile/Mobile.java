@@ -80,7 +80,6 @@ public class Mobile {
 	public Room getRoom() {
 		try {
 			int room = (int) fields.get("room");
-			Log.debug("getroom" + room);
 			return getArea().rooms.get(room);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,7 +99,6 @@ public class Mobile {
 
 	public void setRoom(Room room) {
 		try {
-			Log.debug("setroom " + room.id);
 			fields.put("room", room.id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,7 +106,7 @@ public class Mobile {
 	}
 
 	public void moveTo(Area area, Room room, int dir) {
-		Log.debug(getFullID() + " move to " + room.id + " " + area.name);
+		//Log.debug(getFullID() + " move to " + room.id + " " + area.name);
 		try {
 			getRoom().part(this, dir);
 			fields.put("area", area.name);

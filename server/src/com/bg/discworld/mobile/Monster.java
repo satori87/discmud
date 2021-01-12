@@ -8,7 +8,7 @@ public class Monster extends Mobile {
 	public long nextMoveAt = 0; // to add delay to monsters
 	public int moveState = 0; // 0 = finished first delay, act, 1 = finished action, end turn
 
-	public Monster(MUD mud, String name, int id) {
+	public Monster(MUD mud, String name, long id) {
 		super(mud, id);
 		try {
 			this.name = name;

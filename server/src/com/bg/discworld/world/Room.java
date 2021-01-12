@@ -162,7 +162,7 @@ public class Room {
 		// so we need to invert it to describe their arrival
 		try {
 			mobs.add(mob);
-			Log.debug(mob.getFullID() + " joined room " + id);
+			//Log.debug(mob.getFullID() + " joined room " + id);
 			if (mob.isPlayer) {
 				Player p = (Player) mob;
 				players.add(p);
@@ -205,7 +205,7 @@ public class Room {
 	public void part(Mobile mob, int dir) {
 		try {
 			mobs.remove(mob);
-			Log.debug(mob.getFullID() + " parted room " + id);
+			//Log.debug(mob.getFullID() + " parted room " + id);
 			if (mob instanceof Player) {
 				Player p = (Player) mob;
 				players.remove(p);

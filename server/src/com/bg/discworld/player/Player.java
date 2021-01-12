@@ -87,7 +87,6 @@ public class Player extends Mobile {
 			// send(MUD.messages.get("USER_JOIN"));
 			//if (!getRoom().active)
 			if(getRoom() == null) {
-				Log.debug("null room");
 				fields.put("area", "town");
 				setRoom(getArea().rooms.get(1));
 			}
@@ -117,7 +116,6 @@ public class Player extends Mobile {
 				}
 			} else {
 				if (MUD.tick - lastMessage > MUD.ACTIVE_IDLE_TIME * 1000) {
-					Log.debug("removing" + id);
 					MUD.players.remove(id);
 				}
 			}
@@ -144,7 +142,7 @@ public class Player extends Mobile {
 
 	void part(String playerPartMessage, String announcePartMessage) {
 		try {
-			Log.debug("parting " + id);
+			//Log.debug("parting " + id);
 			getRoom().part(this, -1);
 			save();
 			playing = false;
@@ -224,7 +222,7 @@ public class Player extends Mobile {
 	}
 
 	public void exit(int i) {
-		Log.info(getFullID() + " exiting room " + getRoom().name + " by exit " + Room.getStdExitName(i));
+		//Log.info(getFullID() + " exiting room " + getRoom().name + " by exit " + Room.getStdExitName(i));
 		try {
 			Area area = getArea();
 			int nextRoom = getRoom().exit[i];
@@ -233,9 +231,7 @@ public class Player extends Mobile {
 				if (nr.linkTo.length() > 0) {
 					// exit to another area
 					area = world.area.get(nr.linkTo);
-					Log.debug("area:" + area);
 					nr = area.searchRoom(nr.name);
-					Log.debug("room:" + nr.id);
 					if(nr != null) {
 						moveTo(area, nr, i);
 					} else {
@@ -284,7 +280,7 @@ public class Player extends Mobile {
 	}
 
 	public void parse(String cmd) {
-		Log.debug(getFullID() + ": " + cmd);
+		//Log.debug(getFullID() + ": " + cmd);
 		cmd = TextParser.replaceNotation(cmd, false, this);
 		try {
 			String[] cmds = getCommands(cmd);

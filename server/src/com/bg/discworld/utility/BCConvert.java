@@ -1,6 +1,5 @@
 package com.bg.discworld.utility;
 
-import com.mysql.cj.util.StringUtils;
 
 public class BCConvert {  
 	  
@@ -87,12 +86,4 @@ public class BCConvert {
         return buf.toString();  
     }  
   
-   /* public static void main(String[] args) {  
-        System.out.println(StringUtils.trimToEmpty(" a,b ,c "));  
-        String s = "nihaoｈｋ　｜　　　ｎｉｈｅｈｅ　，。　７８　　７　";  
-        s=BCConvert.qj2bj(s);  
-        System.out.println(s);  
-        System.out.println(BCConvert.bj2qj(s));  
-        }
-   */ 
 }
