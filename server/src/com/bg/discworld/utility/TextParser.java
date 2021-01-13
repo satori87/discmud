@@ -28,7 +28,7 @@ public class TextParser {
 				indexOfOpen = st.indexOf("{{");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return st;
 	}
@@ -47,7 +47,7 @@ public class TextParser {
 				open = st.indexOf((char) 27);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return st;
 	}
@@ -84,7 +84,7 @@ public class TextParser {
 
 			return st;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return st;
 	}
@@ -191,7 +191,7 @@ public class TextParser {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return entry;
 	}
@@ -207,7 +207,7 @@ public class TextParser {
 				st = "0" + st;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return st;
 	}
@@ -245,7 +245,7 @@ public class TextParser {
 				return st;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return st;
 	}

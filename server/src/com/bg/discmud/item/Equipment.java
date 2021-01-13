@@ -2,6 +2,8 @@ package com.bg.discmud.item;
 
 import java.util.HashMap;
 
+import com.bg.discworld.utility.Log;
+
 public class Equipment extends HashMap<String, Integer> {
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +24,7 @@ public class Equipment extends HashMap<String, Integer> {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return -1;
 	}
@@ -38,7 +40,7 @@ public class Equipment extends HashMap<String, Integer> {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return -1;
 	}

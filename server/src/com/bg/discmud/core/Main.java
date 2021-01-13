@@ -1,5 +1,7 @@
 package com.bg.discmud.core;
 
+import com.bg.discworld.utility.Log;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -7,7 +9,7 @@ public class Main {
 			MUD mud = new MUD();
 			mud.start();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 

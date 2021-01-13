@@ -3,6 +3,7 @@ package com.bg.discmud.item;
 import java.util.ArrayList;
 
 import com.bg.discmud.core.MUD;
+import com.bg.discworld.utility.Log;
 import com.bg.discworld.utility.TextParser;
 
 public class Container extends ArrayList<Item> {
@@ -33,7 +34,7 @@ public class Container extends ArrayList<Item> {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return false;
 	}
@@ -46,7 +47,7 @@ public class Container extends ArrayList<Item> {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return false;
 	}
@@ -68,7 +69,7 @@ public class Container extends ArrayList<Item> {
 				s += TextParser.formattedText(i.qty + "", 6, 1) + "   " + i.fields.get("name") + "\n";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return s;
 	}

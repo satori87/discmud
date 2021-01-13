@@ -16,7 +16,6 @@ import com.bg.discworld.player.Player;
 import com.bg.discworld.player.QueryPlayerResult;
 import com.bg.discworld.player.QueryPlayerRunnable;
 import com.bg.discworld.utility.Log;
-import com.bg.discworld.utility.TextParser;
 import com.bg.discworld.utility.Util;
 import com.bg.discworld.world.Area;
 import com.bg.discworld.world.World;
@@ -191,7 +190,7 @@ public class MUD {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 
 	}
@@ -201,7 +200,6 @@ public class MUD {
 		try {
 
 			ResultSet rs;
-			int i = 0;
 
 			Model.clear();
 
@@ -265,10 +263,10 @@ public class MUD {
 					is.fields.put(s, rs.getObject(c));
 					c++;
 				}
-				world.itemSheets.put((int) is.fields.get("id"), is);
+				world.itemSheets.put((String) is.fields.get("name"), is);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -284,7 +282,7 @@ public class MUD {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}

@@ -1,6 +1,7 @@
 package com.bg.discmud.item;
 
 import com.bg.discmud.core.MUD;
+import com.bg.discworld.utility.Log;
 import com.bg.discworld.world.World;
 
 public class Item extends ItemSheet {
@@ -12,16 +13,16 @@ public class Item extends ItemSheet {
 
 	public Container container = null;
 
-	public Item(MUD mud, long id, int qty) {
+	public Item(MUD mud, String name, int qty) {
 		super();
 		try {
 			this.mud = mud;
 			world = mud.world;
 			this.qty = qty;
-			fields.putAll(world.itemSheets.get(id).fields);
-			fields.put("id", id);
+			fields.putAll(world.itemSheets.get(name).fields);
+			fields.put("name", name);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 

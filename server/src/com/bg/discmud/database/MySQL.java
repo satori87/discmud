@@ -12,9 +12,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.*;
 import java.util.Base64;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MySQL {
 
@@ -22,16 +21,16 @@ public class MySQL {
 	public static final String algorithm = "pbkdf2_sha256";
 	public static Connection con;
 
-	public static UUID uuid = UUID.randomUUID();
+	//public static UUID uuid = UUID.randomUUID();
 
 	public static void connectSQL() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://18.223.190.165:3306/mud?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true", "bear",
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mud?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true", "bear",
 					"%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#");
 			Log.info("Connected to mySQL.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -45,14 +44,13 @@ public class MySQL {
 
 			return p.executeQuery();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
 
 	//comment
-	public static ResultSet querySQL(String statement, LinkedList<Object> objects) {
+	public static ResultSet querySQL(String statement, ArrayList<Object> objects) {
 		try {
 			PreparedStatement p = MySQL.con.prepareStatement(statement);
 
@@ -79,7 +77,7 @@ public class MySQL {
 			}
 			return p.executeQuery();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
@@ -92,8 +90,7 @@ public class MySQL {
 		try {
 			con.setAutoCommit(false);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		try {
 			for (RawStatement r : statements) {
@@ -101,18 +98,16 @@ public class MySQL {
 			}
 			con.commit();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		try {
 			con.setAutoCommit(true);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
-	public static void save(String statement, LinkedList<Object> objects) {
+	public static void save(String statement, ArrayList<Object> objects) {
 		try {
 			PreparedStatement p = MySQL.con.prepareStatement(statement);
 			int c = 1;
@@ -138,7 +133,7 @@ public class MySQL {
 			}
 			p.executeUpdate();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -158,7 +153,7 @@ public class MySQL {
 			secret = keyFactory.generateSecret(keySpec);
 		} catch (InvalidKeySpecException e) {
 			System.out.println("Could NOT generate secret key");
-			e.printStackTrace();
+			Log.debug(e);
 		}
 
 		byte[] rawHash = secret.getEncoded();
@@ -195,7 +190,7 @@ public class MySQL {
 		try {
 			return java.util.UUID.randomUUID().toString().replace("-", "");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return "";
 	}

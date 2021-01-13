@@ -1,6 +1,6 @@
 package com.bg.discworld.player;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
@@ -50,9 +50,8 @@ public class Player extends Mobile {
 		try {
 			this.mud = mud;
 			world = mud.world;
-			isPlayer = true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -73,7 +72,7 @@ public class Player extends Mobile {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		message = "";
 	}
@@ -93,7 +92,7 @@ public class Player extends Mobile {
 			getRoom().join(this, -1);
 			Log.info(getFullID() + " join");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -152,7 +151,7 @@ public class Player extends Mobile {
 			flush();
 			Log.info(getFullID() + " part");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -162,7 +161,7 @@ public class Player extends Mobile {
 			MySQL.save(statement, null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -172,7 +171,7 @@ public class Player extends Mobile {
 			Log.info("Saving player " + (String) fields.get("name"));
 			fields.put("last_played", System.currentTimeMillis());
 			String statement = "UPDATE player SET ";
-			LinkedList<Object> obj = new LinkedList<Object>();
+			ArrayList<Object> obj = new ArrayList<Object>();
 			String[] split = Model.playerModel.split(",");
 			int count = split.length;
 			for (int i = 0; i < count; i++) {
@@ -188,7 +187,7 @@ public class Player extends Mobile {
 			MySQL.save(statement, obj);
 			Log.info(getFullID() + " saved");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -201,7 +200,7 @@ public class Player extends Mobile {
 			String s = MUD.messages.get("IDLE_MESSAGE");
 			send(s);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -211,7 +210,7 @@ public class Player extends Mobile {
 			send(exit.replace("{{travel:direction}}", Room.getStdExitName(dir)).replace("{{travel:mode}}",
 					getTravelVerb(dir)));
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		super.moveTo(area, room, dir);
 	}
@@ -250,7 +249,7 @@ public class Player extends Mobile {
 				send(MUD.messages.get("BAD_EXIT"));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -258,8 +257,8 @@ public class Player extends Mobile {
 		return super.canSee(m);
 	}
 
-	public int getID() {
-		return (int) fields.get("id");
+	public long getID() {
+		return id;
 	}
 
 	public String[] getCommands(String cmd) {
@@ -273,8 +272,7 @@ public class Player extends Mobile {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
@@ -395,23 +393,12 @@ public class Player extends Mobile {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	void help(String rest) {
-		/*
-		 * try { rest = rest.toUpperCase(); // TODO: Refactor into a
-		 * "parse command arguments function" String[] word = rest.split(" "); String st
-		 * = "SELECT id,name,plaintext FROM frontend_helpfile WHERE name LIKE '" + word
-		 * + "%' LIMIT 1"; // ResultSet rs = DBMan.querySQL(st); while (rs.next()) {
-		 * sendln("##########" + rs.getString(1) + " [" + rs.getString(0) +
-		 * "] ##########"); // TODO: Refactor into // MUD_MESSAGES if // desired
-		 * sendln(rs.getString(2)); // TODO: Send "related helpfiles" } } catch
-		 * (Exception e) { // TODO: Special catch "Result not found" error and try
-		 * search again with SELECT // ... FROM ... WHERE id= to allow search by
-		 * primary_key e.printStackTrace(); } // return null;
-		 */
+
 	}
 
 	void admin(String rest) {
@@ -428,14 +415,14 @@ public class Player extends Mobile {
 				Mobile[] con = new Mobile[4];
 				Room r = getRoom();
 				pro[0] = this;
-				pro[1] = world.spawnMonster(r, "slug");
-				pro[2] = world.spawnMonster(r, "slug");
-				pro[3] = world.spawnMonster(r, "slug");
-				con[0] = world.spawnMonster(r, "slug");
-				con[1] = world.spawnMonster(r, "slug");
-				con[1] = world.spawnMonster(r, "slug");
-				con[2] = world.spawnMonster(r, "slug");
-				con[3] = world.spawnMonster(r, "slug");
+				pro[1] = r.spawnMonster( "slug");
+				pro[2] = r.spawnMonster( "slug");
+				pro[3] = r.spawnMonster( "slug");
+				con[0] = r.spawnMonster( "slug");
+				con[1] = r.spawnMonster( "slug");
+				con[1] = r.spawnMonster( "slug");
+				con[2] = r.spawnMonster( "slug");
+				con[3] = r.spawnMonster( "slug");
 				battle = new Battle(mud, getRoom(), pro, con);
 				for (int a = 0; a < 4; a++) {
 					pro[a].battle = battle;
@@ -448,13 +435,12 @@ public class Player extends Mobile {
 				battle.start();
 				break;
 			case "SPAWNMOB":
-				id = Integer.parseInt(word[1]);
-				long uid = world.spawnMonster(getRoom(), word[1]).id;
-				if (uid >= 0) {
-					send("Spawned monster " + uid);
-				} else {
-					send("Failed");
-				}
+				//Monster m = getRoom().spawnMonster(word[1]);
+				//if (uid >= 0) {
+				//	send("Spawned monster " + uid);
+				//} else {
+				//	send("Failed");
+				//}
 				break;
 			case "WARP":
 				//moveTo(Integer.parseInt(word[1]), -2);
@@ -472,7 +458,7 @@ public class Player extends Mobile {
 				break;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -513,7 +499,7 @@ public class Player extends Mobile {
 			}
 			send(footer);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -526,7 +512,7 @@ public class Player extends Mobile {
 				// sendln(s);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -552,9 +538,7 @@ public class Player extends Mobile {
 			exits = exits.replace("{{exit_up}}", r.getExitString(4));
 			exits = exits.replace("{{exit_down}}", r.getExitString(5));
 			send(exits);
-			if (r.mobs.size() > 0) { // || r.items.size() > 0 || r.mapobjects.size() > 0
-				send(" ");
-			}
+			
 			for (Player p : r.players) {
 				if (p.active() && p != this && canSee(p)) {
 					send(p.getIdlePhrase().replace("{{name}}", (String) p.fields.get("name")));
@@ -574,7 +558,7 @@ public class Player extends Mobile {
 						MUD.messages.get("USER_LOOK").replace("{{name}}", (String) fields.get("name")));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 

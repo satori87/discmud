@@ -7,7 +7,6 @@ public class NPC extends Mobile {
 	public NPC(MUD mud, int uid) {
 		super(mud, uid);
 		active = true;
-		isNPC = true;
 	}
 
 }

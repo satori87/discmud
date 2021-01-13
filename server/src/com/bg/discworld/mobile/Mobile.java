@@ -2,12 +2,10 @@ package com.bg.discworld.mobile;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.bg.discmud.core.MUD;
 import com.bg.discmud.item.Container;
 import com.bg.discmud.item.Equipment;
 import com.bg.discworld.battle.Battle;
-import com.bg.discworld.battle.Formula;
 import com.bg.discworld.player.Player;
 import com.bg.discworld.utility.Log;
 import com.bg.discworld.utility.TextParser;
@@ -20,9 +18,6 @@ public class Mobile {
 	public MUD mud;
 	public World world;
 
-	public boolean isPlayer = false;
-	public boolean isMonster = false;
-	public boolean isNPC = false;
 
 	public long id = 0;
 	public Map<String, Object> fields = new HashMap<>();
@@ -49,7 +44,6 @@ public class Mobile {
 		this.world = mud.world;
 		this.id = id;
 		inventory = new Container(mud, 100.0, 1.0, true);
-
 		equipment = new Equipment();
 	}
 	
@@ -63,6 +57,18 @@ public class Mobile {
 	public float getTurnSpeed() {
 		return 1.0f;
 	}
+	
+	public boolean isPlayer() {
+		return this instanceof Player;
+	}
+	
+	public boolean isMonster() {
+		return this instanceof Monster;
+	}
+	
+	public boolean isNPC() {
+		return this instanceof NPC;
+	}	
 
 	public String getFullID() { // this is how player is represented in logs
 		try {
@@ -72,7 +78,7 @@ public class Mobile {
 				return (String) fields.get("name");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return "unnamed_mobile";
 	}
@@ -82,7 +88,7 @@ public class Mobile {
 			int room = (int) fields.get("room");
 			return getArea().rooms.get(room);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
@@ -92,7 +98,7 @@ public class Mobile {
 			String area = (String) fields.get("area");
 			return world.area.get(area);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return null;
 	}
@@ -101,7 +107,7 @@ public class Mobile {
 		try {
 			fields.put("room", room.id);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -113,18 +119,18 @@ public class Mobile {
 			setRoom(room);			
 			getRoom().join(this, dir);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	public void say(String rest) {
 		try {
 			getRoom().sendAllBut(this, fields.get("name") + " says '" + rest + "'");
-			if (isPlayer) {
+			if (isPlayer()) {
 				((Player) this).send("You say '" + rest + "'");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -190,7 +196,7 @@ public class Mobile {
 			//return (boolean) fields.get("front_row");
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return true;
 	}
@@ -237,102 +243,6 @@ public class Mobile {
 
 	public void setHP(int hp) {
 		fields.put("hp", hp);
-	}
-
-	public String getDamType() {
-		Object o = fields.get("melee_damage_type");
-		if (o != null) {
-			return (String) o;
-		} else {
-			return "slash";
-		}
-	}
-
-	public int meleeDamageDice() {
-		Object o = fields.get("melee_damage_dice");
-		if (o == null) {
-			return 1;
-		} else {
-			return (int) o;
-		}
-	}
-
-	public int meleeDamageSides() {
-		Object o = fields.get("melee_damage_sides");
-		if (o == null) {
-			return 1;
-		} else {
-			return (int) o;
-		}
-	}
-
-	public int meleeDamageBonus() {
-		Object o = fields.get("melee_damage_modifier");
-		if (o == null) {
-			return 1;
-		} else {
-			return (int) o;
-		}
-	}
-
-	public void meleeAttack(Mobile nme) {
-		Mobile m = this;
-		String sign = "";
-		String name = m.getName();
-		int hitbonus = Formula.strCheck(m);
-		String damtype = m.getDamType();
-		String nmeName = nme.getName();
-		int hitroll = Formula.d20();
-		int ac = Formula.getAC(nme);
-		if (hitbonus > 0) {
-			sign = "+";
-		}
-		if (hitbonus != 0) {
-			sign += hitbonus;
-		}
-		boolean hit = (hitroll == 20) || (hitroll > 1 && hitroll + hitbonus > ac);
-		String st = name + " rolls 1d20" + sign + " to hit " + nmeName + " (AC:" + ac + ") and rolls a "
-				+ (hitroll + hitbonus) + ". " + (hit ? "SUCCESS" : "FAILURE");
-		if(battle != null) {
-			battle.sendAll(st);
-		}
-		if (hitroll == 0) {
-			battle.sendAll(name + " curses angry fairies for its embarassing display.");
-		} else if (hit) {
-			int damdice = m.meleeDamageDice();
-			int damsides = m.meleeDamageSides();
-			int dambonus = m.meleeDamageBonus();
-			sign = "";
-			if (dambonus > 0) {
-				sign = "+";
-			}
-			sign += dambonus + "";
-			if (hitroll == 20) {
-				damdice *= 2;
-				battle.sendAll("Critical hit! Hermes himself couldn't have guided " + name + "'s " + damtype
-						+ " with greater accuracy.");
-			}
-			int damroll = Formula.roll(damdice, damsides, dambonus);
-			if (damroll < 0)
-				damroll = 0;
-			st = name + " rolls " + damdice + "d" + damsides + sign + " and does " + damroll + " "
-					+ Formula.getGerund(damtype) + " damage to " + nmeName + ".";
-			if (damroll > 0) {
-				nme.takeDamageFrom(m, damroll, damtype);
-			}
-			battle.sendAll(st);
-
-		} else {
-			battle.sendAll(name + "'s " + damtype + " misses " + nmeName + ".");
-		}
-	}
-
-	public double distTo(Mobile m) {
-		return Formula.distance(m.x, m.y, x, y);
-	}
-
-	public double getRange() {
-		return 1.5;
 	}
 	
 	public int getSpeed() {

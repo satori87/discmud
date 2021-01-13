@@ -4,6 +4,7 @@ import com.bg.discmud.core.MUD;
 import com.bg.discworld.mobile.Mobile;
 import com.bg.discworld.mobile.Monster;
 import com.bg.discworld.player.Player;
+import com.bg.discworld.utility.Log;
 import com.bg.discworld.utility.TextParser;
 import com.bg.discworld.world.Room;
 import com.bg.discworld.world.World;
@@ -38,7 +39,7 @@ public class Battle {
 			// announce start of battle and the battle order
 			beginTurn();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -71,7 +72,7 @@ public class Battle {
 				return false;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return true;
 	}
@@ -83,7 +84,7 @@ public class Battle {
 			mob.moved = false;
 			// announce whose turn it is
 			sendAllBut("It is " + mob.fields.get("name") + "'s turn.", mob);
-			if (mob.isPlayer) {
+			if (mob.isPlayer()) {
 				Player p = (Player) mob;
 				p.send("It is your turn.");
 				p.timesWarned = 0;
@@ -102,20 +103,20 @@ public class Battle {
 				m.moveState = 0;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	void endTurn() {
 		try {
 			Mobile mob = battleTurn.current();
-			if (mob.isPlayer) {
+			if (mob.isPlayer()) {
 				((Player) mob).send("You end your turn.");
 			}
 			sendAllBut(mob.fields.get("name") + " ends turn.", mob);
 			beginTurn();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -143,7 +144,7 @@ public class Battle {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return line;
 	}
@@ -152,7 +153,7 @@ public class Battle {
 		try {
 			return (m.acted);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return true;
 	}
@@ -164,7 +165,7 @@ public class Battle {
 			// when a mobiles turn comes up, move everything to mobile.turn() with a
 			// parameter to support delay
 			Mobile mob = battleTurn.current();
-			if (mob.isPlayer) {
+			if (mob.isPlayer()) {
 				Player p = (Player) mob;
 				if (tick > p.turnOverAt) { // force turn to be OVER
 					p.missedTurns++;
@@ -206,33 +207,33 @@ public class Battle {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	public void sendAll(String s) {
 		try {
 			for (Mobile m : battleTurn) {
-				if (m.isPlayer) {
+				if (m.isPlayer()) {
 					Player p = (Player) m;
 					p.send(s);
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	public void sendAllBut(String s, Mobile but) {
 		try {
 			for (Mobile m : battleTurn) {
-				if (m.isPlayer && m != but) {
+				if (m.isPlayer() && m != but) {
 					Player p = (Player) m;
 					p.send(s);
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 

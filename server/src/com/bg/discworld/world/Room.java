@@ -1,24 +1,23 @@
 package com.bg.discworld.world;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import com.bg.discmud.core.MUD;
 import com.bg.discworld.battle.Battle;
 import com.bg.discworld.mobile.Mobile;
 import com.bg.discworld.mobile.Monster;
+import com.bg.discworld.mobile.MonsterSheet;
 import com.bg.discworld.player.Player;
 import com.bg.discworld.utility.Log;
 
 public class Room {
 
-	// public boolean active = false;
 	MUD mud;
 	World world;
 
 	public int id = 0;
 	public String name = "Room";
 	public String desc = "Description";
-
 	public String displayName;
 	public int[] exit = new int[6];
 	public int height = 0;
@@ -26,21 +25,14 @@ public class Room {
 	public int y = 0;
 	public String linkTo = "";
 
-	public LinkedList<Mobile> mobs = new LinkedList<Mobile>();
-	public LinkedList<Player> players = new LinkedList<Player>();
-	public LinkedList<Monster> monsters = new LinkedList<Monster>();
+	public ArrayList<Mobile> mobs = new ArrayList<Mobile>();
+	public ArrayList<Player> players = new ArrayList<Player>();
+	public ArrayList<Monster> monsters = new ArrayList<Monster>();
 
-	public LinkedList<Battle> battles = new LinkedList<Battle>();
+	public ArrayList<Battle> battles = new ArrayList<Battle>();
 
 	public Room() {
 
-	}
-
-	public Room(MUD mud, World world, int id) {
-		this.mud = mud;
-		this.world = world;
-		exit = new int[10];
-		name = "Room " + this.id;
 	}
 
 	public boolean command(Player p, String cmd) {
@@ -54,7 +46,7 @@ public class Room {
 				return getStdExitName(i) + " ";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return "";
 	}
@@ -84,7 +76,7 @@ public class Room {
 				p.send(st);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -96,7 +88,7 @@ public class Room {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -109,7 +101,7 @@ public class Room {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -130,7 +122,7 @@ public class Room {
 				return MUD.messages.get("JOIN_DIRECTION_UP");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return "around";
 	}
@@ -153,7 +145,7 @@ public class Room {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 		return "around";
 	}
@@ -163,10 +155,10 @@ public class Room {
 		try {
 			mobs.add(mob);
 			//Log.debug(mob.getFullID() + " joined room " + id);
-			if (mob.isPlayer) {
+			if (mob.isPlayer()) {
 				Player p = (Player) mob;
 				players.add(p);
-			} else if (mob.isMonster) {
+			} else if (mob.isMonster()) {
 				Monster m = (Monster) mob;
 				monsters.add(m);
 			}
@@ -181,17 +173,17 @@ public class Room {
 								.replace("{{travel:mode}}", mob.getTravelVerbPlural(dir))
 								.replace("{{travel:direction_join}}", getArrivalString(dir)));
 			}
-			if (mob.isPlayer && dir != -1) {
+			if (mob.isPlayer() && dir != -1) {
 				((Player) mob).look(false);
 				// roomScript("join", MUD.generalScriptFields, new Object[] { this, mob, dir });
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	public boolean say(Mobile mob, String rest) {
-		// LinkedList<Object> result = roomScript("say", MUD.generalScriptFields, new
+		// ArrayList<Object> result = roomScript("say", MUD.generalScriptFields, new
 		// Object[] { this, mob, rest });
 		// for (Object o : result) {
 		// ((boolean) o == false) {
@@ -223,35 +215,35 @@ public class Room {
 				s = s.replace("{{travel:direction_part}}", getDepartureString(dir));
 				sendAllCanSeeBut(mob, s);
 			}
-			if (mob.isPlayer) {
+			if (mob.isPlayer()) {
 				// roomScript("part", MUD.generalScriptFields, new Object[] { this, mob, dir });
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	public void sendAllBut(Mobile but, String st) { // note these send without prompts or newlines
 		try {
 			for (Player p : players) {
-				if (p.isPlayer && p != but) {
+				if (p.isPlayer() && p != but) {
 					p.send(st);
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
 	public void sendImmBut(Mobile but, String st) { // note these send without prompts or newlines
 		try {
 			for (Player p : players) {
-				if (p.isPlayer && p != but && p.hasAccess()) {
+				if (p.isPlayer() && p != but && p.hasAccess()) {
 					p.send("\n" + st);
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -262,13 +254,14 @@ public class Room {
 	}
 
 	public Monster[] getMonsterArray() {
-		Monster[] mon = new Monster[monsters.size()];
-		int i = 0;
-		for (Monster m : monsters) {
-			mon[i] = m;
-			i++;
-		}
-		return mon;
+		return (Monster[]) monsters.toArray();
+		//Monster[] mon = new Monster[monsters.size()];
+		//int i = 0;
+		//for (Monster m : monsters) {
+		//	mon[i] = m;
+		//	i++;
+		//}
+		//return mon;
 	}
 
 	public Mobile findMob(String name) {
@@ -280,6 +273,21 @@ public class Room {
 			}
 		}
 		return null;
+	}
+	
+	public Monster spawnMonster(String name) {
+		Monster m = null;
+		try {
+			MonsterSheet ms = world.monsterSheets.get(name);
+			if (ms == null) {
+				return null;
+			}	
+			m = new Monster(mud, name);
+			join(m, -1);
+		} catch (Exception e) {
+			Log.debug(e);
+		}
+		return m;
 	}
 
 }

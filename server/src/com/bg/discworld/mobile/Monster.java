@@ -2,44 +2,26 @@ package com.bg.discworld.mobile;
 
 import com.bg.discmud.core.MUD;
 import com.bg.discworld.battle.Formula;
+import com.bg.discworld.utility.Log;
 
 public class Monster extends Mobile {
 	public String name = "";
 	public long nextMoveAt = 0; // to add delay to monsters
 	public int moveState = 0; // 0 = finished first delay, act, 1 = finished action, end turn
 
-	public Monster(MUD mud, String name, long id) {
-		super(mud, id);
+	public Monster(MUD mud, String name) {
+		super(mud, 0);
 		try {
 			this.name = name;
 			active = true;
-			isMonster = true;
 			fields.putAll(world.monsterSheets.get(name).fields);
-			//fields.put("hit_dice_modifier", 0);
-			//fields.put("melee_damage_modifier", 3);
-			//fields.put("melee_damage_dice", 2);
-			//fields.put("melee_damage_bonus", 3);
-			int hpdice = 3;
-			int hpsides = 8;
-			int hpbonus = 4;
-			//fields.put("hp_dice", hpdice);
-			//fields.put("hp_dice_sides", hpsides);
-			//fields.put("hp_dice_bonus", hpbonus);
-			int hp = Formula.roll(hpdice,hpsides,hpbonus);
+			int hp = Formula.dice((String)fields.get("hp_dice"));
 			fields.put("hp", hp);
 			fields.put("max_hp", hp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
-		/*
-		 * 
-		 * hp_dice_modifier = models.IntegerField(default=0) hit_dice_modifier =
-		 * models.IntegerField(default=0) melee_damage_modifier =
-		 * models.IntegerField(default=0)
-		 */
 
-	}
-
-	
+	}	
 	
 }

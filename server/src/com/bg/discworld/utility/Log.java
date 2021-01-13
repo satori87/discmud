@@ -117,7 +117,7 @@ public class Log {
 			PrintStream ps = new PrintStream(s);
 			System.setOut(ps);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 
@@ -129,7 +129,7 @@ public class Log {
 			String f = "logs/" + dir + "/" + dir + " Hour " + hour + ".txt";
 			setOut(f);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.debug(e);
 		}
 	}
 

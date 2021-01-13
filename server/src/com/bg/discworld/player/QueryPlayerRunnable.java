@@ -1,14 +1,12 @@
 package com.bg.discworld.player;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
-
+import java.util.ArrayList;
 import org.javacord.api.event.message.MessageCreateEvent;
-
 import com.bg.discmud.core.MUD;
 import com.bg.discmud.database.Model;
 import com.bg.discmud.database.MySQL;
+import com.bg.discworld.utility.Log;
 
 
 public class QueryPlayerRunnable implements Runnable {
@@ -35,7 +33,7 @@ public class QueryPlayerRunnable implements Runnable {
 	Player queryPlayer(long id) {
 		try {
 			String statement = "SELECT " + Model.playerModel + " FROM player WHERE id=?";
-			LinkedList<Object> obj = new LinkedList<Object>();
+			ArrayList<Object> obj = new ArrayList<Object>();
 			obj.add(id);
 			ResultSet rs = MySQL.querySQL(statement, obj);
 			Player p = null;
@@ -50,8 +48,8 @@ public class QueryPlayerRunnable implements Runnable {
 				}
 				return p;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			Log.debug(e);
 		}
 		return null;
 	}

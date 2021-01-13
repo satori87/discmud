@@ -31,7 +31,7 @@ public class Scripter {
 			} catch (NoSuchMethodException e) {
 				return true;
 		} catch (ScriptException e) {
-			e.printStackTrace();
+			Log.debug(e);
 				return true;				
 			}
 		//return null;
