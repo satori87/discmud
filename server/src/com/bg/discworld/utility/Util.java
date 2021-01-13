@@ -1,26 +1,16 @@
 package com.bg.discworld.utility;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.zip.DeflaterOutputStream;
-import java.util.zip.InflaterInputStream;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
@@ -147,61 +137,6 @@ public class Util {
 		return simpleDateFormat.format(new Date());
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Object deserializeB(byte[] data, Class c) {
-		Object object = null;
-		try {
-			ByteArrayInputStream bais = new ByteArrayInputStream(data);
-			ObjectInputStream ois = new ObjectInputStream(bais);
-			InflaterInputStream is = new InflaterInputStream(ois);
-			Input input = new Input(is);
-			Kryo kryo = new Kryo();
-			object = kryo.readObject(input, c);
-			input.close();
-		} catch (Exception e) {
-			Log.error(e);
-		}
-		return object;
-	}
-
-	public static String serialize(Object object) {
-		return new String(serializeB(object), StandardCharsets.UTF_8);
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static Object deserialize(String s, Class c) {
-		return deserializeB(s.getBytes(StandardCharsets.UTF_8), c);
-	}
-
-	public static byte[] serializeB(Object object) {
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(baos);
-			DeflaterOutputStream os = new DeflaterOutputStream(oos);
-			Output output = new Output(os);
-			Kryo kryo = new Kryo();
-			kryo.writeObject(output, object);
-			output.close();
-			return baos.toByteArray();
-		} catch (Exception e) {
-			Log.error(e);
-		}
-		return null;
-	}
-
-	public static byte[][] divideArray(byte[] source, int chunksize) {
-		byte[][] ret = new byte[(int) Math.ceil(source.length / (double) chunksize)][chunksize];
-		try {
-			int start = 0;
-			for (int i = 0; i < ret.length; i++) {
-				ret[i] = Arrays.copyOfRange(source, start, start + chunksize);
-				start += chunksize;
-			}
-		} catch (Exception e) {
-			Log.error(e);
-		}
-		return ret;
-	}
 
 	static public boolean inCenteredBox(int x, int y, int centerX, int centerY, int width, int height) {
 		int topY = centerY - (height / 2);
