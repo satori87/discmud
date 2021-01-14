@@ -43,3 +43,5 @@ C:\dev\discmud\editor\mudeditor\obj\Debug\MUDEdit.exe.manifest
 C:\dev\discmud\editor\mudeditor\obj\Debug\MUDEdit.application
 C:\dev\discmud\editor\mudeditor\obj\Debug\MUDEdit.exe
 C:\dev\discmud\editor\mudeditor\obj\Debug\MUDEdit.pdb
+C:\dev\discmud\editor\mudeditor\obj\Debug\MUDEdit.csprojAssemblyReference.cache
+C:\dev\discmud\editor\mudeditor\obj\Debug\MUDEdit.FormMonster.resources

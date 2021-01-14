@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MUDEdit.exe" size="42968">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MUDEdit.exe" size="47576">
       <assemblyIdentity name="MUDEdit" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>gI/t+tKXBURm0s1rPJzlBvmZsX+RCNaq/QwVSi0iCTI=</dsig:DigestValue>
+        <dsig:DigestValue>8bSKUGv6wDks4P6+ha/ErWw2LXk/QabE8jd76hLcWUU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

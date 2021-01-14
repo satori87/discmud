@@ -31,7 +31,7 @@ namespace MUDEdit
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabArea = new System.Windows.Forms.TabPage();
-            this.txtFetchArea = new System.Windows.Forms.Button();
+            this.btnFetchArea = new System.Windows.Forms.Button();
             this.lstArea = new System.Windows.Forms.ListBox();
             this.btnEditArea = new System.Windows.Forms.Button();
             this.btnAddArea = new System.Windows.Forms.Button();
@@ -70,7 +70,7 @@ namespace MUDEdit
             // tabArea
             // 
             this.tabArea.BackColor = System.Drawing.Color.Transparent;
-            this.tabArea.Controls.Add(this.txtFetchArea);
+            this.tabArea.Controls.Add(this.btnFetchArea);
             this.tabArea.Controls.Add(this.lstArea);
             this.tabArea.Controls.Add(this.btnEditArea);
             this.tabArea.Controls.Add(this.btnAddArea);
@@ -84,16 +84,17 @@ namespace MUDEdit
             this.tabArea.Text = "Area";
             this.tabArea.Enter += new System.EventHandler(this.tabArea_Enter);
             // 
-            // txtFetchArea
+            // btnFetchArea
             // 
-            this.txtFetchArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFetchArea.Location = new System.Drawing.Point(652, 9);
-            this.txtFetchArea.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.txtFetchArea.Name = "txtFetchArea";
-            this.txtFetchArea.Size = new System.Drawing.Size(150, 49);
-            this.txtFetchArea.TabIndex = 25;
-            this.txtFetchArea.Text = "Refresh";
-            this.txtFetchArea.UseVisualStyleBackColor = true;
+            this.btnFetchArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFetchArea.Location = new System.Drawing.Point(652, 9);
+            this.btnFetchArea.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.btnFetchArea.Name = "btnFetchArea";
+            this.btnFetchArea.Size = new System.Drawing.Size(150, 49);
+            this.btnFetchArea.TabIndex = 25;
+            this.btnFetchArea.Text = "Refresh";
+            this.btnFetchArea.UseVisualStyleBackColor = true;
+            this.btnFetchArea.Click += new System.EventHandler(this.btnFetchArea_Click);
             // 
             // lstArea
             // 
@@ -105,6 +106,7 @@ namespace MUDEdit
             this.lstArea.Name = "lstArea";
             this.lstArea.Size = new System.Drawing.Size(325, 526);
             this.lstArea.TabIndex = 21;
+            this.lstArea.DoubleClick += new System.EventHandler(this.lstArea_DoubleClick);
             // 
             // btnEditArea
             // 
@@ -116,6 +118,7 @@ namespace MUDEdit
             this.btnEditArea.TabIndex = 22;
             this.btnEditArea.Text = "Edit Area";
             this.btnEditArea.UseVisualStyleBackColor = true;
+            this.btnEditArea.Click += new System.EventHandler(this.btnEditArea_Click);
             // 
             // btnAddArea
             // 
@@ -139,6 +142,7 @@ namespace MUDEdit
             this.btnDeleteArea.TabIndex = 24;
             this.btnDeleteArea.Text = "Delete";
             this.btnDeleteArea.UseVisualStyleBackColor = true;
+            this.btnDeleteArea.Click += new System.EventHandler(this.btnDeleteArea_Click);
             // 
             // tabMonster
             // 
@@ -315,7 +319,7 @@ namespace MUDEdit
         private System.Windows.Forms.Button btnDeleteMob;
         private System.Windows.Forms.Button btnEditMob;
         private System.Windows.Forms.Button btnAddMob;
-        private System.Windows.Forms.Button txtFetchArea;
+        private System.Windows.Forms.Button btnFetchArea;
         private System.Windows.Forms.ListBox lstArea;
         private System.Windows.Forms.Button btnEditArea;
         private System.Windows.Forms.Button btnAddArea;

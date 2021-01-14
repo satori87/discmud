@@ -331,6 +331,7 @@
             // 
             this.txtAreaName.Location = new System.Drawing.Point(1155, 55);
             this.txtAreaName.Name = "txtAreaName";
+            this.txtAreaName.ReadOnly = true;
             this.txtAreaName.Size = new System.Drawing.Size(492, 26);
             this.txtAreaName.TabIndex = 0;
             // 

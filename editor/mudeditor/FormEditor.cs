@@ -213,5 +213,6 @@ namespace MUDEdit {
                 deleteMonster(lstMonster.SelectedItem.ToString());
             }
         }
+
     }
 }
