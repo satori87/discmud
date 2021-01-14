@@ -30,39 +30,44 @@ namespace MUDEdit {
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
-
-        }
-
-        private void txtHP_Leave(object sender, EventArgs e) {
-            fix();            
-        }
-
-        void fix() {
             //fix hp dice, TODO move to function somewhere nice and static
             String s = txtHP.Text;
             int numDice = 1;
             int numSides = 1;
             int bonus = 0;
+            bool good = false;
+            String sbonus = "";
             try {
                 int dpos = s.IndexOf("d");
                 String num = s.Substring(0, dpos);
-                String rest = s.Substring(dpos);
+                String rest = s.Substring(dpos + 1);
                 numDice = int.Parse(num);
                 int ppos = rest.IndexOf("+");
                 String sides = rest;
                 if (ppos > 0) {
                     sides = rest.Substring(0, ppos);
-                    String sbonus = rest.Substring(ppos);
+                    sbonus = rest.Substring(ppos + 1);
                     bonus = int.Parse(sbonus);
                 }
+                Console.WriteLine("a:" + num + " b: " + rest + " c: " + sides + " d: " + sbonus);
                 numSides = int.Parse(sides);
-                String dice = numDice + "d" + numSides + "+" + bonus;
-                txtHP.Text = dice;
+                good = true;
+                //String dice = numDice + "d" + numSides + "+" + bonus;
+                //txtHP.Text = dice;
             } catch (Exception ex) {
                 Console.WriteLine(ex);
-                txtHP.Text = "";
+                //txtHP.Text = "";
             }
+            if(good) {
 
+            }
+        }
+
+        private void txtHP_Leave(object sender, EventArgs e) {
+                     
+        }
+
+        void fix() {
             foreach (Control c in tabMain.Controls) {
                 if (c is TextBox && c.AccessibleName != null && c.AccessibleName.Equals("int")) {
                     TextBox t = (TextBox)c;
@@ -85,17 +90,17 @@ namespace MUDEdit {
             txtName.Text = (String)m.fields["name"];
             txtDisplayName.Text = (String)m.fields["display_name"];
             txtHP.Text = (String)m.fields["hp_dice"];
-            txtStr.Text = (String)m.fields["strength"];
-            txtDex.Text = (String)m.fields["dexterity"];
-            txtCon.Text = (String)m.fields["constitution"];
-            txtInt.Text = (String)m.fields["intelligence"];
-            txtWis.Text = (String)m.fields["wisdom"];
-            txtLuck.Text = (String)m.fields["luck"];
-            txtPhysEva.Text = (String)m.fields["physeva"];
-            txtPhysDef.Text = (String)m.fields["physdef"];
-            txtMagEva.Text = (String)m.fields["mageva"];
-            txtMagDef.Text = (String)m.fields["magdef"];
-            txtSpeed.Text = (String)m.fields["speed"];
+            txtStr.Text = "" + (int)m.fields["strength"];
+            txtDex.Text = "" + (int)m.fields["dexterity"];
+            txtCon.Text = "" + (int)m.fields["constitution"];
+            txtInt.Text = "" + (int)m.fields["intelligence"];
+            txtWis.Text = "" + (int)m.fields["wisdom"];
+            txtLuck.Text = "" + (int)m.fields["luck"];
+            txtPhysEva.Text = "" + (int)m.fields["physeva"];
+            txtPhysDef.Text = "" + (int)m.fields["physdef"];
+            txtMagEva.Text = "" + (int)m.fields["mageva"];
+            txtMagDef.Text = "" + (int)m.fields["magdef"];
+            txtSpeed.Text = "" + (int)m.fields["speed"];
 
             fix();
         }
