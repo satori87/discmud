@@ -7,6 +7,9 @@ using System.Windows.Forms;
 namespace MUDEdit {
     static class MUDEdit {
 
+        public static string monsterModel = "";
+
+
         public static FormArea formArea;
         public static FormEditor formEditor;
         public static FormMonster formMonster;

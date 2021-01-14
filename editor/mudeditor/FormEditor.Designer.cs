@@ -179,6 +179,7 @@ namespace MUDEdit
             this.lstMonster.Name = "lstMonster";
             this.lstMonster.Size = new System.Drawing.Size(325, 526);
             this.lstMonster.TabIndex = 26;
+            this.lstMonster.DoubleClick += new System.EventHandler(this.lstMonster_DoubleClick);
             // 
             // btnDeleteMob
             // 
@@ -190,6 +191,7 @@ namespace MUDEdit
             this.btnDeleteMob.TabIndex = 29;
             this.btnDeleteMob.Text = "Delete";
             this.btnDeleteMob.UseVisualStyleBackColor = true;
+            this.btnDeleteMob.Click += new System.EventHandler(this.btnDeleteMob_Click);
             // 
             // btnEditMob
             // 
@@ -201,6 +203,7 @@ namespace MUDEdit
             this.btnEditMob.TabIndex = 27;
             this.btnEditMob.Text = "Edit Mob";
             this.btnEditMob.UseVisualStyleBackColor = true;
+            this.btnEditMob.Click += new System.EventHandler(this.btnEditMob_Click);
             // 
             // btnAddMob
             // 

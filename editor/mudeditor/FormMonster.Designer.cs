@@ -23,10 +23,20 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // FormMonster
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "FormMonster";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "FormMonster";
+            this.Text = "Editing Monster";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMonster_FormClosing);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

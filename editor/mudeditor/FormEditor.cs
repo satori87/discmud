@@ -14,8 +14,6 @@ using System.Windows.Forms;
 namespace MUDEdit {
     public partial class FormEditor : Form {
 
-        string monsterModel = "";
-
         public FormEditor() {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             Font = new Font(Font.Name, 8.25f * 96f / CreateGraphics().DpiX, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont);
@@ -67,16 +65,16 @@ namespace MUDEdit {
 
         public void fetchMonster() {
             World.monster = new Dictionary<string, Monster>();
-            monsterModel = "";
+            MUDEdit.monsterModel = "";
             var response = querySQL("SHOW COLUMNS FROM monster");
             var rdr = response.rdr;
             while (rdr.Read()) {
-                monsterModel += rdr.GetString(0) + ",";
+                MUDEdit.monsterModel += rdr.GetString(0) + ",";
             }
             response.con.Close();
-            monsterModel = monsterModel.Substring(0, monsterModel.Length - 1);
+            MUDEdit.monsterModel = MUDEdit.monsterModel.Substring(0, MUDEdit.monsterModel.Length - 1);
             Monster m;
-            response = querySQL("SELECT " + monsterModel + " FROM monster");
+            response = querySQL("SELECT " + MUDEdit.monsterModel + " FROM monster");
             rdr = response.rdr;
             lstMonster.Items.Clear();
             while (rdr.Read()) {
@@ -84,7 +82,7 @@ namespace MUDEdit {
                 m = new Monster(name);
                 World.monster[name] = m;
                 lstMonster.Items.Add(rdr.GetString(0));
-                string[] split = monsterModel.Split(',');
+                string[] split = MUDEdit.monsterModel.Split(',');
                 int c = 0;
                 foreach (string s in split) {
                     m.fields[s] = rdr.GetValue(c);
@@ -157,6 +155,13 @@ namespace MUDEdit {
             this.Hide();
         }
 
+        void editMonster(String name) {
+            MUDEdit.curMonster = World.monster[name];
+            MUDEdit.formMonster = new FormMonster();
+            MUDEdit.formMonster.Show();
+            this.Hide();
+        }
+
         private void btnDeleteArea_Click(object sender, EventArgs e) {
             if (lstArea.Items.Count > 0 && lstArea.SelectedItem != null) {
                 deleteArea(lstArea.SelectedItem.ToString());
@@ -168,6 +173,14 @@ namespace MUDEdit {
                 MUDEdit.curArea = null;
                 World.area.Remove(name);
                 fetchArea();
+            }
+        }
+
+        void deleteMonster(String name) {
+            if (executeSQL("DELETE FROM monster WHERE name='" + name + "'")) {
+                MUDEdit.curMonster = null;
+                World.monster.Remove(name);
+                fetchMonster();
             }
         }
 
@@ -183,5 +196,22 @@ namespace MUDEdit {
             fetchMonster();
         }
 
+        private void lstMonster_DoubleClick(object sender, EventArgs e) {
+            if (lstMonster.Items.Count > 0 && lstMonster.SelectedItem != null) {
+                editMonster(lstMonster.SelectedItem.ToString());
+            }
+        }
+
+        private void btnEditMob_Click(object sender, EventArgs e) {
+            if (lstMonster.Items.Count > 0 && lstMonster.SelectedItem != null) {
+                editMonster(lstMonster.SelectedItem.ToString());
+            }
+        }
+
+        private void btnDeleteMob_Click(object sender, EventArgs e) {
+            if (lstMonster.Items.Count > 0 && lstMonster.SelectedItem != null) {
+                deleteMonster(lstMonster.SelectedItem.ToString());
+            }
+        }
     }
 }
