@@ -13,12 +13,14 @@ using System.Windows.Forms;
 
 namespace MUDEdit {
     public partial class FormEditor : Form {
+
+        string monsterModel = "";
+
         public FormEditor() {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             Font = new Font(Font.Name, 8.25f * 96f / CreateGraphics().DpiX, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont);
             this.AutoScaleMode = AutoScaleMode.None;
             InitializeComponent();
-
         }
 
         private void btnFetchArea_Click(object sender, EventArgs e) {
@@ -26,81 +28,107 @@ namespace MUDEdit {
         }
 
         public void fetchArea() {
-            String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
-            var con = new MySqlConnection(cs);
-            con.Open();
-            var stm = "SELECT name,json FROM area";
-            World.area = new Dictionary<string, Area>();
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
-            MySql.Data.MySqlClient.MySqlDataReader rdr = cmd.ExecuteReader();
+            World.area = new Dictionary<string, Area>();           
             lstArea.Items.Clear();
             Area a = new Area("a");
+            var response = querySQL("SELECT name,json FROM area");
+            var rdr = response.rdr;            
             while (rdr.Read()) {
                 String name = rdr.GetString(0);
+                Console.WriteLine(name);
                 World.area[name] = (Area)Util.JSONToObject(rdr.GetString(1), a.GetType());
                 lstArea.Items.Add(rdr.GetString(0));
             }
+            response.con.Close();
+        }
+
+        public MySqlResponse querySQL(string stm) {
+            String cs = @"server=127.0.0.1;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            var con = new MySqlConnection(cs);
+            con.Open();
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            return new MySqlResponse(rdr,con);
+        }
+
+        public Boolean executeSQL(string stm) {
+            String cs = @"server=127.0.0.1;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            var con = new MySqlConnection(cs);
+            con.Open();
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
+            if (cmd.ExecuteNonQuery() < 1) {
+                Interaction.MsgBox("Failed SQL");
+                con.Close();   
+                return false;
+            }
             con.Close();
+            return true;            
         }
 
         public void fetchMonster() {
-            String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
-            var con = new MySqlConnection(cs);
-            con.Open();
-            var stm = "SHOW COLUMNS FROM monster";
-            World.area = new Dictionary<string, Area>();
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
-            MySql.Data.MySqlClient.MySqlDataReader rdr = cmd.ExecuteReader();
-            String model = "";
+            World.monster = new Dictionary<string, Monster>();
+            monsterModel = "";
+            var response = querySQL("SHOW COLUMNS FROM monster");
+            var rdr = response.rdr;
             while (rdr.Read()) {
-                model += rdr.GetString(0) + ",";
+                monsterModel += rdr.GetString(0) + ",";
             }
-            model = model.Substring(0, model.Length - 1);
-            con.Close();
-            con = new MySqlConnection(cs);
-            con.Open();
-            stm = "SELECT " + model + " FROM monster";
-            Console.WriteLine(stm);
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
-            rdr = cmd.ExecuteReader();
+            response.con.Close();
+            monsterModel = monsterModel.Substring(0, monsterModel.Length - 1);
             Monster m;
+            response = querySQL("SELECT " + monsterModel + " FROM monster");
+            rdr = response.rdr;
             lstMonster.Items.Clear();
             while (rdr.Read()) {
                 String name = rdr.GetString(0);
-                m = new Monster();
+                m = new Monster(name);
                 World.monster[name] = m;
                 lstMonster.Items.Add(rdr.GetString(0));
-                string[] split = model.Split(',');
+                string[] split = monsterModel.Split(',');
                 int c = 0;
-                foreach(string s in split) {
+                foreach (string s in split) {
                     m.fields[s] = rdr.GetValue(c);
                     c++;
-                }                
+                }
             }
-            con.Close();
+            response.con.Close();
         }
 
         bool addArea(String name) {
             if (!World.area.ContainsKey(name)) {
                 Area a = new Area(name);
                 World.area[name] = a;
-                String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
-                var con = new MySqlConnection(cs);
-                con.Open();
-                String stm = "INSERT INTO area(name, json) VALUES('" + name + "','" + a.GetJSON() + "')";
-                var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
-                if (cmd.ExecuteNonQuery() < 1) {
-                    Interaction.MsgBox("New area failed SQL");
+                if (executeSQL("INSERT INTO area(name, json) VALUES('" + name + "','" + a.GetJSON() + "')")) {
+                    fetchArea();
+                    MUDEdit.curArea = World.area[name];
+                    MUDEdit.formArea = new FormArea();
+                    MUDEdit.formArea.Show();
+                    this.Hide();
+                    return true;
                 }
-                con.Close();
-                fetchArea();
-                MUDEdit.curArea = World.area[name];
-                MUDEdit.formArea = new FormArea();
-                MUDEdit.formArea.Show();
-                this.Hide();
-                return true;
-            } else {
-                return false;
+            }
+            return false;
+        }
+
+        bool addMonster(String name) {
+            if (!World.monster.ContainsKey(name)) {
+                Monster m = new Monster(name);
+                World.monster[name] = m;
+                if (executeSQL("INSERT INTO area(name) VALUES('" + name + "')")) {
+                    //fetchArea();
+                    //MUDEdit.curArea = World.area[name];
+                    //MUDEdit.formArea = new FormArea();
+                    //MUDEdit.formArea.Show();
+                    //this.Hide();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void btnAddMob_Click(object sender, EventArgs e) {
+            if (!addMonster(Interaction.InputBox("Enter monster internal name"))) {
+                Interaction.MsgBox("That monster already exists!");
             }
         }
 
@@ -123,7 +151,6 @@ namespace MUDEdit {
         }
 
         void editArea(String name) {
-
             MUDEdit.curArea = World.area[name];
             MUDEdit.formArea = new FormArea();
             MUDEdit.formArea.Show();
@@ -137,19 +164,11 @@ namespace MUDEdit {
         }
 
         void deleteArea(String name) {
-            String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
-            var con = new MySqlConnection(cs);
-            con.Open();
-            String stm = "DELETE FROM area WHERE name='" + name + "'";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
-            if (cmd.ExecuteNonQuery() < 1) {
-                Interaction.MsgBox("Delete area failed SQL");
+            if(executeSQL("DELETE FROM area WHERE name='" + name + "'")) {
+                MUDEdit.curArea = null;
+                World.area.Remove(name);
+                fetchArea();
             }
-            con.Close();
-            MUDEdit.curArea = null;
-            World.area.Remove(name);
-            fetchArea();
-
         }
 
         private void tabArea_Enter(object sender, EventArgs e) {

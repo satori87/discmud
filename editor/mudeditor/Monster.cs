@@ -10,7 +10,8 @@ namespace MUDEdit {
 
         public Dictionary<string, Object> fields = new Dictionary<string, Object>();
 
-        public Monster() { 
+        public Monster(String name) {
+            fields[name] = name;
         }
     }
 
