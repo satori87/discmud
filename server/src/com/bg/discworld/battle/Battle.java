@@ -1,5 +1,7 @@
 package com.bg.discworld.battle;
 
+import java.util.ArrayList;
+
 import com.bg.discmud.core.MUD;
 import com.bg.discworld.mobile.Mobile;
 import com.bg.discworld.mobile.Monster;
@@ -16,34 +18,39 @@ public class Battle {
 	Room room;
 
 	BattleTurn battleTurn;
+	
+	ArrayList<Mobile> mobs = new ArrayList<Mobile>();	//all mobs incl player and monster
 
-	public Battle(MUD mud, Room r, Mobile[] ally, Mobile[] enemy) {
+	public Battle(MUD mud, Room r) {
 		try {
 			this.mud = mud;
 			this.world = mud.world;
-			room = r;
-
-			Mobile[] mobs = new Mobile[ally.length + enemy.length];
-			int i = 0;
-			for (Mobile m : ally) {
-				// place(m, true);
-				mobs[i] = m;
-				i++;
-			}
-			for (Mobile m : enemy) {
-				// place(m, false);
-				mobs[i] = m;
-				i++;
-			}
-			battleTurn = new BattleTurn(mud, mobs);
-			// announce start of battle and the battle order
-			beginTurn();
+			room = r;			
 		} catch (Exception e) {
 			Log.debug(e);
 		}
 	}
+	
+	public void addMob(Mobile m, int side) {
+		mobs.add(m);
+		m.side = side;
+	}
+	
+	public ArrayList<Mobile> getSide(int side) {
+		ArrayList<Mobile> ret = new ArrayList<Mobile>();
+		for(Mobile m : mobs) {
+			if(m.side == side) {
+				ret.add(m);
+			}
+		}
+		return ret;
+	}
 
 	public void start() {
+		battleTurn = new BattleTurn(mud, mobs);
+		// announce start of battle and the battle order
+		sendAll("Battle headeR");
+		beginTurn();
 	}
 
 	public boolean command(Player p, String cmd) {
@@ -51,14 +58,6 @@ public class Battle {
 			String[] cmds = cmd.split(" ");
 			// Mobile m = null;
 			switch (cmds[0].toUpperCase()) {
-			case "MOVE":
-			case "MOV":
-			case "MO":
-			case "M":
-				if (cmds.length > 1 && cmds[1].length() == 2) {
-
-				}
-				break;
 			case "MELEE":
 			case "MELE":
 			case "MEL":
@@ -94,8 +93,7 @@ public class Battle {
 					p.timesWarned = 99;
 				}
 				p.turnOverAt = System.currentTimeMillis() + interval;
-				// showBattle(p);
-				// its a players turn, send them battle menu and start a countdown
+				showBattle(p);
 			} else {
 				// is monster, do the thing
 				Monster m = (Monster) mob;
@@ -105,6 +103,10 @@ public class Battle {
 		} catch (Exception e) {
 			Log.debug(e);
 		}
+	}
+	
+	void showBattle(Player p) {
+		
 	}
 
 	void endTurn() {
@@ -193,7 +195,7 @@ public class Battle {
 					// do monsters turn here
 					switch (m.moveState) {
 					case 0:// MONSTER TURN
-						//autoTurn(m);
+						autoTurn(m);
 						m.moveState++;
 						m.nextMoveAt = tick + MUD.MONSTER_ACTION_DELAY;
 						break;
@@ -209,6 +211,10 @@ public class Battle {
 		} catch (Exception e) {
 			Log.debug(e);
 		}
+	}
+	
+	public void autoTurn(Mobile m) {
+		
 	}
 
 	public void sendAll(String s) {

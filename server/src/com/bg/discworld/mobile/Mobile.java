@@ -18,6 +18,7 @@ public class Mobile {
 	public MUD mud;
 	public World world;
 
+	public int side = 0;
 
 	public long id = 0;
 	public Map<String, Object> fields = new HashMap<>();
@@ -66,10 +67,10 @@ public class Mobile {
 		return this instanceof Monster;
 	}
 	
-	public boolean isNPC() {
-		return this instanceof NPC;
-	}	
-
+	public void autoTurn() {
+		
+	}
+	
 	public String getFullID() { // this is how player is represented in logs
 		try {
 			if (player() != null) {

@@ -156,6 +156,7 @@
     <Compile Include="GraphicalOverlay.designer.cs">
       <DependentUpon>GraphicalOverlay.cs</DependentUpon>
     </Compile>
+    <Compile Include="Monster.cs" />
     <Compile Include="MUDEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />

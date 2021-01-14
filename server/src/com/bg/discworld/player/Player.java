@@ -83,9 +83,7 @@ public class Player extends Mobile {
 			active = true;
 			String join = MUD.messages.get("ANOTHER_USER_JOIN").replace("{{name}}", (String) fields.get("name"));
 			mud.sendChannel("logging", join);
-			// send(MUD.messages.get("USER_JOIN"));
-			//if (!getRoom().active)
-			if(getRoom() == null) {
+			if (getRoom() == null) {
 				fields.put("area", "town");
 				setRoom(getArea().rooms.get(1));
 			}
@@ -141,7 +139,7 @@ public class Player extends Mobile {
 
 	void part(String playerPartMessage, String announcePartMessage) {
 		try {
-			//Log.debug("parting " + id);
+			// Log.debug("parting " + id);
 			getRoom().part(this, -1);
 			save();
 			playing = false;
@@ -221,7 +219,7 @@ public class Player extends Mobile {
 	}
 
 	public void exit(int i) {
-		//Log.info(getFullID() + " exiting room " + getRoom().name + " by exit " + Room.getStdExitName(i));
+		// Log.info(getFullID() + " exiting room " + getRoom().name + " by exit " +
 		try {
 			Area area = getArea();
 			int nextRoom = getRoom().exit[i];
@@ -231,19 +229,13 @@ public class Player extends Mobile {
 					// exit to another area
 					area = world.area.get(nr.linkTo);
 					nr = area.searchRoom(nr.name);
-					if(nr != null) {
+					if (nr != null) {
 						moveTo(area, nr, i);
 					} else {
 						send(MUD.messages.get("BAD_EXIT"));
 					}
 				} else {
-					// move within area
-					// if (world.area[])
-					//if (nr.active) {
-						moveTo(area, nr, i);
-					//} else {
-						//send(MUD.messages.get("BAD_EXIT"));
-					//}
+					moveTo(area, nr, i);
 				}
 			} else {
 				send(MUD.messages.get("BAD_EXIT"));
@@ -278,7 +270,7 @@ public class Player extends Mobile {
 	}
 
 	public void parse(String cmd) {
-		//Log.debug(getFullID() + ": " + cmd);
+		// Log.debug(getFullID() + ": " + cmd);
 		cmd = TextParser.replaceNotation(cmd, false, this);
 		try {
 			String[] cmds = getCommands(cmd);
@@ -402,58 +394,26 @@ public class Player extends Mobile {
 	}
 
 	void admin(String rest) {
-		Player p = null;
 		try {
 			if (!hasAccess()) {
 				return;
 			}
-			rest = rest.toUpperCase();
 			String[] word = rest.split(" ");
-			switch (word[0]) {
-			case "SEXY":
-				Mobile[] pro = new Mobile[4];
-				Mobile[] con = new Mobile[4];
-				Room r = getRoom();
-				pro[0] = this;
-				pro[1] = r.spawnMonster( "slug");
-				pro[2] = r.spawnMonster( "slug");
-				pro[3] = r.spawnMonster( "slug");
-				con[0] = r.spawnMonster( "slug");
-				con[1] = r.spawnMonster( "slug");
-				con[1] = r.spawnMonster( "slug");
-				con[2] = r.spawnMonster( "slug");
-				con[3] = r.spawnMonster( "slug");
-				battle = new Battle(mud, getRoom(), pro, con);
-				for (int a = 0; a < 4; a++) {
-					pro[a].battle = battle;
-					con[a].battle = battle;
-				}
-				
-				getRoom().battles.add(battle);
-				
-				//m.battle = battle;
-				battle.start();
-				break;
+			switch (word[0].toUpperCase()) {
 			case "SPAWNMOB":
-				//Monster m = getRoom().spawnMonster(word[1]);
-				//if (uid >= 0) {
-				//	send("Spawned monster " + uid);
-				//} else {
-				//	send("Failed");
-				//}
+				Monster m = getRoom().spawnMonster(word[1]);
+				if (m != null) {
+					send("Spawned monster " + m.name);
+				} else {
+					send("Failed");
+				}
 				break;
 			case "WARP":
-				//moveTo(Integer.parseInt(word[1]), -2);
 				break;
 			case "WARPTO":
-				p = mud.findPlayer(word[1]);
-				if (p != null) {
-					//moveTo((int) p.getRoom().id, -2);
-				}
 				break;
 			case "FETCH":
 				mud.fetch();
-
 				look(false);
 				break;
 			}
@@ -463,23 +423,21 @@ public class Player extends Mobile {
 	}
 
 	void attack(String rest) {
-		// String name = "";
 		if (battle == null) {
 			Mobile m = getRoom().findMob(rest);
 			if (m != null) {
 				if (m.battle == null) {
 					// LETS START A BATTLE
 					Room r = getRoom();
-
-					Mobile[] con = new Mobile[] { m };
-					con = r.getMonsterArray();
-					battle = new Battle(mud, r, new Mobile[] { this }, con);
+					battle = new Battle(mud, r);
+					battle.addMob(this, 0);
+					battle.addMob(m, 1);
 					r.battles.add(battle);
 					m.battle = battle;
 					battle.start();
-					send("YOO");
 				} else {
 					// send a message they are already in battle until we add joining in mechanics
+					//TODO
 					send("YUCK");
 				}
 			}
@@ -538,7 +496,7 @@ public class Player extends Mobile {
 			exits = exits.replace("{{exit_up}}", r.getExitString(4));
 			exits = exits.replace("{{exit_down}}", r.getExitString(5));
 			send(exits);
-			
+
 			for (Player p : r.players) {
 				if (p.active() && p != this && canSee(p)) {
 					send(p.getIdlePhrase().replace("{{name}}", (String) p.fields.get("name")));

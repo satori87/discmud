@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using MUDEdit;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,10 @@ namespace MUDEdit {
             Font = new Font(Font.Name, 8.25f * 96f / CreateGraphics().DpiX, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont);
             this.AutoScaleMode = AutoScaleMode.None;
             InitializeComponent();
-            fetchArea();
-        }
-
-        private void FormAreaList_Load(object sender, EventArgs e) {
 
         }
 
-        private void txtFetchArea_Click(object sender, EventArgs e) {
+        private void btnFetchArea_Click(object sender, EventArgs e) {
             fetchArea();
         }
 
@@ -46,8 +43,41 @@ namespace MUDEdit {
             con.Close();
         }
 
-        private void tabArea_Click(object sender, EventArgs e) {
-
+        public void fetchMonster() {
+            String cs = @"server=18.223.190.165;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            var con = new MySqlConnection(cs);
+            con.Open();
+            var stm = "SHOW COLUMNS FROM monster";
+            World.area = new Dictionary<string, Area>();
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
+            MySql.Data.MySqlClient.MySqlDataReader rdr = cmd.ExecuteReader();
+            String model = "";
+            while (rdr.Read()) {
+                model += rdr.GetString(0) + ",";
+            }
+            model = model.Substring(0, model.Length - 1);
+            con.Close();
+            con = new MySqlConnection(cs);
+            con.Open();
+            stm = "SELECT " + model + " FROM monster";
+            Console.WriteLine(stm);
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
+            rdr = cmd.ExecuteReader();
+            Monster m;
+            lstMonster.Items.Clear();
+            while (rdr.Read()) {
+                String name = rdr.GetString(0);
+                m = new Monster();
+                World.monster[name] = m;
+                lstMonster.Items.Add(rdr.GetString(0));
+                string[] split = model.Split(',');
+                int c = 0;
+                foreach(string s in split) {
+                    m.fields[s] = rdr.GetValue(c);
+                    c++;
+                }                
+            }
+            con.Close();
         }
 
         bool addArea(String name) {
@@ -86,10 +116,6 @@ namespace MUDEdit {
             }
         }
 
-        private void lstArea_SelectedIndexChanged(object sender, EventArgs e) {
-
-        }
-
         private void lstArea_DoubleClick(object sender, EventArgs e) {
             if (lstArea.Items.Count > 0 && lstArea.SelectedItem != null) {
                 editArea(lstArea.SelectedItem.ToString());
@@ -97,7 +123,7 @@ namespace MUDEdit {
         }
 
         void editArea(String name) {
-            
+
             MUDEdit.curArea = World.area[name];
             MUDEdit.formArea = new FormArea();
             MUDEdit.formArea.Show();
@@ -125,5 +151,18 @@ namespace MUDEdit {
             fetchArea();
 
         }
+
+        private void tabArea_Enter(object sender, EventArgs e) {
+            fetchArea();
+        }
+
+        private void tabMonster_Enter(object sender, EventArgs e) {
+            fetchMonster();
+        }
+
+        private void btnFetchMob_Click(object sender, EventArgs e) {
+            fetchMonster();
+        }
+
     }
 }

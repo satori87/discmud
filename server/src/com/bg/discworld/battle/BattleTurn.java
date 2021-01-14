@@ -15,7 +15,7 @@ public class BattleTurn extends ArrayList<Mobile> {
 
 	public int turn = -1;
 
-	public BattleTurn(MUD mud, Mobile[] mobs) {
+	public BattleTurn(MUD mud, ArrayList<Mobile> mobs) {
 		this.mud = mud;
 		for (Mobile m : mobs) {
 			add(m);

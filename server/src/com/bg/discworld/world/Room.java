@@ -12,9 +12,6 @@ import com.bg.discworld.utility.Log;
 
 public class Room {
 
-	MUD mud;
-	World world;
-
 	public int id = 0;
 	public String name = "Room";
 	public String desc = "Description";
@@ -253,17 +250,6 @@ public class Room {
 		}
 	}
 
-	public Monster[] getMonsterArray() {
-		return (Monster[]) monsters.toArray();
-		//Monster[] mon = new Monster[monsters.size()];
-		//int i = 0;
-		//for (Monster m : monsters) {
-		//	mon[i] = m;
-		//	i++;
-		//}
-		//return mon;
-	}
-
 	public Mobile findMob(String name) {
 		String mname = "";
 		for (Mobile m : mobs) {
@@ -278,11 +264,11 @@ public class Room {
 	public Monster spawnMonster(String name) {
 		Monster m = null;
 		try {
-			MonsterSheet ms = world.monsterSheets.get(name);
+			MonsterSheet ms = MUD.mud.world.monsterSheets.get(name);
 			if (ms == null) {
 				return null;
 			}	
-			m = new Monster(mud, name);
+			m = new Monster(MUD.mud, name);
 			join(m, -1);
 		} catch (Exception e) {
 			Log.debug(e);
