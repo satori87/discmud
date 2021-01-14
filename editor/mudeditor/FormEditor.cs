@@ -115,11 +115,11 @@ namespace MUDEdit {
                 Monster m = new Monster(name);
                 World.monster[name] = m;
                 if (executeSQL("INSERT INTO area(name) VALUES('" + name + "')")) {
-                    //fetchArea();
-                    //MUDEdit.curArea = World.area[name];
-                    //MUDEdit.formArea = new FormArea();
-                    //MUDEdit.formArea.Show();
-                    //this.Hide();
+                    fetchMonster();
+                    MUDEdit.curMonster = World.monster[name];
+                    MUDEdit.formMonster = new FormMonster();
+                    MUDEdit.formMonster.Show();
+                    this.Hide();
                     return true;
                 }
             }

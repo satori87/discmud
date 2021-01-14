@@ -127,6 +127,7 @@ namespace MUDEdit
             this.btnAddArea.TabIndex = 23;
             this.btnAddArea.Text = "Add Area";
             this.btnAddArea.UseVisualStyleBackColor = true;
+            this.btnAddArea.Click += new System.EventHandler(this.btnAddArea_Click);
             // 
             // btnDeleteArea
             // 
