@@ -78,29 +78,6 @@ namespace MUDEdit {
             }
 
         }
-
-        private void txtHP_Leave(object sender, EventArgs e) {
-                     
-        }
-
-        void fix() {
-            foreach (Control c in tabMain.Controls) {
-                if (c is TextBox && c.AccessibleName != null && c.AccessibleName.Equals("int")) {
-                    TextBox t = (TextBox)c;
-                    try {
-                        int n = int.Parse(t.Text);
-                    } catch (Exception ex) {
-                        Console.WriteLine(ex);
-                        t.Text = "0";
-                    }
-                }
-            }
-        }
-
-        private void txtLeave(object sender, EventArgs e) {
-            fix();
-        }
-
         private void FormMonster_Shown(object sender, EventArgs e) {
             Monster m =  MUDEdit.curMonster;
             txtName.Text = (String)m.fields["name"];
@@ -121,20 +98,23 @@ namespace MUDEdit {
             fix();
         }
 
-        private void tabLoot_Enter(object sender, EventArgs e) {
-
+        void fix() {
+            foreach (Control c in tabMain.Controls) {
+                if (c is TextBox && c.AccessibleName != null && c.AccessibleName.Equals("int")) {
+                    TextBox t = (TextBox)c;
+                    try {
+                        int n = int.Parse(t.Text);
+                    } catch (Exception ex) {
+                        Console.WriteLine(ex);
+                        t.Text = "0";
+                    }
+                }
+            }
         }
 
-        private void textBox7_TextChanged(object sender, EventArgs e) {
-
+        private void txtLeave(object sender, EventArgs e) {
+            fix();
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e) {
-
-        }
     }
 }
