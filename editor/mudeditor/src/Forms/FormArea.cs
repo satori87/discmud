@@ -645,8 +645,7 @@ namespace MUDEdit {
                 Interaction.MsgBox("Save area failed SQL");
             } else {
                 this.Hide();
-                MUDEdit.formEditor.Show();
-                MUDEdit.formEditor.fetchArea();
+                MUDEdit.formEditor.Show();                
             }
             con.Close();
         }

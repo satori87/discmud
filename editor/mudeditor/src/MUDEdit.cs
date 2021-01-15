@@ -30,7 +30,6 @@ namespace MUDEdit {
             Application.Run(formEditor);
         }
 
-
         public static MySqlResponse querySQL(string stm) {
             String cs = @"server=127.0.0.1;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
             var con = new MySqlConnection(cs);

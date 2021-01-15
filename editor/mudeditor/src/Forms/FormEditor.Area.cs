@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MUDEdit {
     partial class FormEditor : Form {
-                private void btnAddArea_Click(object sender, EventArgs e) {
+        private void btnAddArea_Click(object sender, EventArgs e) {
             if (!addArea(Interaction.InputBox("Enter area internal name"))) {
                 Interaction.MsgBox("That area already exists!");
             }
@@ -50,13 +50,6 @@ namespace MUDEdit {
             MUDEdit.curArea = World.area[name];
             MUDEdit.formArea = new FormArea();
             MUDEdit.formArea.Show();
-            this.Hide();
-        }
-
-        void editMonster(String name) {
-            MUDEdit.curMonster = World.monster[name];
-            MUDEdit.formMonster = new FormMonster();
-            MUDEdit.formMonster.Show();
             this.Hide();
         }
 
