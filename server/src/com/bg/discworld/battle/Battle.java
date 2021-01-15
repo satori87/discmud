@@ -79,8 +79,6 @@ public class Battle {
 	void beginTurn() {
 		try {
 			Mobile mob = battleTurn.next();
-			mob.acted = false;
-			mob.moved = false;
 			// announce whose turn it is
 			sendAllBut("It is " + mob.fields.get("name") + "'s turn.", mob);
 			if (mob.isPlayer()) {
@@ -149,15 +147,6 @@ public class Battle {
 			Log.debug(e);
 		}
 		return line;
-	}
-
-	boolean isTurnOver(Mobile m) {
-		try {
-			return (m.acted);
-		} catch (Exception e) {
-			Log.debug(e);
-		}
-		return true;
 	}
 
 	public void update(long tick) {

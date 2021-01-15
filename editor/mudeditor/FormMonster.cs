@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,7 +22,8 @@ namespace MUDEdit {
         }
 
         private void FormMonster_Load(object sender, EventArgs e) {
-
+            btnSave.Parent = this;
+            btnCancel.Parent = this;
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
@@ -49,18 +51,32 @@ namespace MUDEdit {
                     sbonus = rest.Substring(ppos + 1);
                     bonus = int.Parse(sbonus);
                 }
-                Console.WriteLine("a:" + num + " b: " + rest + " c: " + sides + " d: " + sbonus);
                 numSides = int.Parse(sides);
                 good = true;
-                //String dice = numDice + "d" + numSides + "+" + bonus;
-                //txtHP.Text = dice;
             } catch (Exception ex) {
                 Console.WriteLine(ex);
-                //txtHP.Text = "";
             }
             if(good) {
-
+                
+                //Area a = new Area(txtName.Text);
+                //a.displayName = txtDisplayName.Text;
+               // a.rooms = rooms;
+               // String cs = @"server=127.0.0.1;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+                //var con = new MySqlConnection(cs);
+                //con.Open();
+               // String stm = "UPDATE area SET json='" + a.GetJSON() + "' WHERE name='" + a.name + "'";
+                //var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
+                //if (cmd.ExecuteNonQuery() < 1) {
+                //    Interaction.MsgBox("Save area failed SQL");
+                //} else {
+                //    this.Hide();
+                   // MUDEdit.formEditor.Show();
+                  //  MUDEdit.formEditor.fetchArea();
+                //}
+                //con.Close();
+                
             }
+
         }
 
         private void txtHP_Leave(object sender, EventArgs e) {
@@ -103,6 +119,22 @@ namespace MUDEdit {
             txtSpeed.Text = "" + (int)m.fields["speed"];
 
             fix();
+        }
+
+        private void tabLoot_Enter(object sender, EventArgs e) {
+
+        }
+
+        private void textBox7_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }

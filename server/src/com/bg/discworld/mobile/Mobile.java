@@ -26,19 +26,13 @@ public class Mobile {
 	public Container inventory;
 	public Equipment equipment;
 
-	// some state variables
+
 	public boolean active = true;
 	public Battle battle;
 
-	public boolean frontRow = true;
-	public boolean ally = true;
 	public int x = 0;
 	public int y = 0;
 	public int turn = 0;
-
-	public boolean moved = false;
-	public boolean acted = false;
-	public boolean bonus_acted = false;
 
 	public Mobile(MUD mud, long id) {
 		this.mud = mud;
@@ -67,11 +61,8 @@ public class Mobile {
 		return this instanceof Monster;
 	}
 	
-	public void autoTurn() {
-		
-	}
 	
-	public String getFullID() { // this is how player is represented in logs
+	public String getFullID() {
 		try {
 			if (player() != null) {
 				return "[name:" + fields.get("name") + " id:" + id +  "]";
