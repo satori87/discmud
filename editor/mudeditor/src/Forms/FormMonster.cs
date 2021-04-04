@@ -78,6 +78,7 @@ namespace MUDEdit {
             }
 
         }
+        
         private void FormMonster_Shown(object sender, EventArgs e) {
             Monster m =  MUDEdit.curMonster;
             txtName.Text = (String)m.fields["name"];
@@ -94,7 +95,7 @@ namespace MUDEdit {
             txtMagEva.Text = "" + (int)m.fields["mageva"];
             txtMagDef.Text = "" + (int)m.fields["magdef"];
             txtSpeed.Text = "" + (int)m.fields["speed"];
-
+            
             fix();
         }
 
