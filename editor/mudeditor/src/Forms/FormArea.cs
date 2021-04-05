@@ -636,7 +636,7 @@ namespace MUDEdit {
             Area a = new Area(txtAreaName.Text);
             a.displayName = txtDisplayName.Text;
             a.rooms = rooms;
-            String cs = @"server=127.0.0.1;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            String cs = @"server=" + MUDEdit.IP + ";port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
             var con = new MySqlConnection(cs);
             con.Open();
             String stm = "UPDATE area SET json='" + a.GetJSON() + "' WHERE name='" + a.name + "'";

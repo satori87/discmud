@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,9 +30,9 @@ namespace MUDEdit {
             formMonster = new FormMonster();
             Application.Run(formEditor);
         }
-
+        public const String IP = "192.168.0.64";
         public static MySqlResponse querySQL(string stm) {
-            String cs = @"server=127.0.0.1;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            String cs = @"server=" + IP + ";port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
             var con = new MySqlConnection(cs);
             con.Open();
             Console.WriteLine(stm);
@@ -41,7 +42,7 @@ namespace MUDEdit {
         }
 
         public static Boolean executeSQL(string stm) {
-            String cs = @"server=127.0.0.1;port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
+            String cs = @"server=" + IP + ";port=3306;userid=bear;password=%Pb?fYW@ydP9RLqeTnfSW-u!23c$f=%#;database=mud";
             var con = new MySqlConnection(cs);
             con.Open();
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(stm, con);
@@ -63,6 +64,13 @@ namespace MUDEdit {
             while (rdr.Read()) {
                 String name = rdr.GetString(0);
                 Console.WriteLine(name);
+                try {
+
+                    World.area[name] = (Area)Util.JSONToObject(rdr.GetString(1), a.GetType());
+                } catch (SqlNullValueException) {
+                    continue;
+                }
+               
                 World.area[name] = (Area)Util.JSONToObject(rdr.GetString(1), a.GetType());
                 lstArea.Items.Add(rdr.GetString(0));
             }

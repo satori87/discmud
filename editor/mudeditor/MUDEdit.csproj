@@ -144,17 +144,11 @@
     <Compile Include="src\Forms\FormArea.Designer.cs">
       <DependentUpon>FormArea.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Forms\FormEditor.Area.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="src\Forms\FormEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\Forms\FormEditor.Designer.cs">
       <DependentUpon>FormEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\Forms\FormEditor.Monster.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\Forms\FormMonster.cs">
       <SubType>Form</SubType>
